@@ -10,33 +10,52 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Category {
+  id        String     @id @default(uuid())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  name      String
+  Question  Question[]
+}
+
 model Question {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  game        Game     @relation(fields: [gameId], references: [id])
-  gameId      String
-  question    String
-  answer      String
-  wrongAnswer String[]
+  id         String   @id @default(uuid())
+  slideId    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  game       Game     @relation(fields: [gameId], references: [id])
+  gameId     String
+  answer     Answer   @relation(fields: [answerId], references: [id])
+  answerId   String
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  price      Int
+}
+
+model Answer {
+  id        String     @id @default(uuid())
+  slideId   String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  Question  Question[]
 }
 
 model Player {
-  id          String   @id @default(uuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  game        Game     @relation(fields: [gameId], references: [id])
-  gameId      String
-  name        String
-  score       Int
+  id         String   @id @default(uuid())
+  playerName String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  game       Game     @relation(fields: [gameId], references: [id])
+  gameId     String
+  score      Int
 }
 
 model Game {
-  id                String   @id @default(uuid())
-  shortId           String   @unique
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  questions         Question[]
-  palyers           Player[]
-  googleSlidesUrl   String
+  id             String     @id @default(uuid())
+  presentationId String
+  shortId        String     @unique
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  questions      Question[]
+  palyers        Player[]
 }
