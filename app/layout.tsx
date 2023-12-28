@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   const links = [
     { href: "/", label: "Join game" },
-    { href: "/games/new", label: "New game" },
+    { href: "/games", label: "My games" },
     { href: "/games/123", label: "Game view" },
     { href: "/games/123/questions/1", label: "Question view" },
     { href: "/games/123/player?playerName=Player1", label: "Player view" },

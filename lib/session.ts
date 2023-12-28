@@ -5,7 +5,7 @@ export const session = async ({ session, token }: any) => {
     ...session,
     user: {
       ...session.user,
-      id: token.id,
+      id: session.user.email,
       accessToken: token.accessToken,
     },
   };

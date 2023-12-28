@@ -26,7 +26,16 @@ export const createPresentation = async (
     }),
   });
 
-  return resp.json();
+  const response = await resp.json();
+  console.log({ response });
+
+  // @ts-ignore
+  if (response.error) {
+    console.log("Error creating presentation");
+    // @ts-ignore
+    throw new Error(response.error.message);
+  }
+  return response;
 };
 
 export const getPresentation = async (
