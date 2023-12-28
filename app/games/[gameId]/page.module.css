@@ -1,0 +1,20 @@
+.board {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  height: 100vh;
+}
+
+.question {
+  display: flex;
+  /* width: 182.82px;
+  height: 117.478px;
+  padding: 23.787px 22.244px; */
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1aa3;
+  color: #ffd66c;
+  font-size: 3em;
+  font-weight: 600;
+}

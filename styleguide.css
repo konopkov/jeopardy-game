@@ -1,0 +1,11 @@
+:root {
+  --big-question-text-font-family: "Inter-SemiBold", Helvetica;
+  --big-question-text-font-size: 72px;
+  --big-question-text-font-style: normal;
+  --big-question-text-font-weight: 600;
+  --big-question-text-letter-spacing: 0px;
+  --big-question-text-line-height: 114.99999761581421%;
+  --fluff: 0px 9px 24px 0px rgba(0, 0, 0, 0.12);
+  --jeopardy-blue: rgba(28, 26, 163, 1);
+  --jeopardy-gold: rgba(255, 214, 108, 1);
+}
