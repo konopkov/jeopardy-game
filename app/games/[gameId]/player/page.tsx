@@ -6,13 +6,12 @@ export type GamePageSearchParams = {
   playerName: string;
 };
 
-export default function GamePage({
-  params,
-  searchParams,
-}: {
+export type GamePageProps = {
   params: GamePageParams;
   searchParams: GamePageSearchParams;
-}) {
+};
+
+export default function GamePage({ params, searchParams }: GamePageProps) {
   const { playerName } = searchParams;
 
   return (

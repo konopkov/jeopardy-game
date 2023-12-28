@@ -16,7 +16,7 @@ const providers = [
   }),
 ];
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },

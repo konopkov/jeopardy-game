@@ -2,7 +2,16 @@ import styles from "./page.module.css";
 
 const PRESENTATION_ID = "1K6wYV3s5Nce9fSsjrCYnZOa4L6kTspbZsvCspwUlah4";
 
-export default function GamePage({ ...params }) {
+export type QuestionPageParams = {
+  gameId: string;
+  questionId: string;
+};
+
+export type QuestionPAgeProps = {
+  params: QuestionPageParams;
+};
+
+export default function QuestionPage({ params }: QuestionPAgeProps) {
   return (
     <div className={styles.container}>
       <p>{JSON.stringify(params, null, 2)}</p>
