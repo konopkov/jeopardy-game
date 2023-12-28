@@ -52,6 +52,7 @@ model Player {
 
 model Game {
   id             String     @id @default(uuid())
+  ownerId        String
   presentationId String
   shortId        String     @unique
   createdAt      DateTime   @default(now())
