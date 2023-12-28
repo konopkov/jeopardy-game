@@ -21,6 +21,7 @@ const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   providers,
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ account, profile, user }) {
       console.log("signIn", { account, profile, user });
