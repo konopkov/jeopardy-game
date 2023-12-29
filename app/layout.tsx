@@ -1,7 +1,8 @@
+import { Header } from "@/components/ui/header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Link from "next/link";
 import "./globals.css";
+import styles from "./layout.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,28 +16,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const links = [
-    { href: "/", label: "Join game" },
-    { href: "/games", label: "My games" },
-    { href: "/games/123", label: "Game view" },
-    { href: "/games/123/questions/1", label: "Question view" },
-    { href: "/games/123/player?playerName=Player1", label: "Player view" },
-  ];
-
   return (
     <html lang="en">
-      <body className={`${inter.className} p-10 h-screen w-screen`}>
-        <header className="mb-20">
-          <nav>
-            <ul className="flex items-center">
-              {links.map(({ href, label }) => (
-                <li key={href} className="px-4 text-2xl">
-                  <Link href={href}>{label}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </header>
+      <body
+        className={`${inter.className} p-10 h-screen w-screen ${styles.page}`}
+      >
+        <Header />
         {children}
       </body>
     </html>

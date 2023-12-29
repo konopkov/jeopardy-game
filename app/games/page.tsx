@@ -35,6 +35,7 @@ export default async function NewGamePage() {
         {userGames.map((game) => (
           <div key={game.id}>
             <p>{game.title}</p>
+            <p>{game.id}</p>
             <Link
               rel="noopener noreferrer"
               target="_blank"

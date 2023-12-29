@@ -1,0 +1,9 @@
+.question {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1aa3;
+  color: #ffd66c;
+  font-size: 3em;
+  font-weight: 600;
+}
