@@ -14,7 +14,12 @@ export default async function EditGamePage({ params }: EditGamePageProps) {
 
   return (
     <div style={{ gridArea: "main" }}>
-      <Board categories={categories} questions={5} gameId={gameId} />
+      <Board
+        categories={categories}
+        questions={5}
+        gameId={gameId}
+        answers={[]}
+      />
     </div>
   );
 }
