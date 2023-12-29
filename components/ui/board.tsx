@@ -1,27 +1,33 @@
 import styles from "./board.module.css";
 import { Category } from "./category";
 
+export type Category = {
+  categoryId: string;
+  name: string;
+  gameId: string;
+};
+
 export type BoardProps = {
-  categories: number;
+  categories: Category[];
   questions: number;
   gameId: string;
 };
 
 export const Board = (props: BoardProps) => {
   const { categories, gameId, questions } = props;
+  console.log({ categories });
 
   return (
     <div className={styles.board}>
-      {Array.from({ length: categories }, (_, categoryIndex) => {
-        const rowNum = categoryIndex + 1;
-        const categoryNumber = categoryIndex + 1;
+      {categories.map((category, categoryIndex) => {
+        const rowNum = category.categoryId;
 
         return (
           <Category
             key={rowNum}
             row={rowNum}
             questions={questions}
-            categoryName={`Category ${categoryNumber}`}
+            categoryName={category.name}
             gameId={gameId}
           />
         );

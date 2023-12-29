@@ -147,19 +147,8 @@ const createTextRequests = (slideType: SlideType, data: SlideData) => {
   ];
 };
 
-// export const createTemplateSlide = async (
-//   presentationId: string,
-//   input: SlideData,
-//   credentials: Credentials
-// ) => {
-//   const requests = templateSlideRequestsForCategory(input)
-//   console.log({ requests });
-
-//   return await batchUpdate(presentationId, requests, credentials);
-// };
-
 export type Category = {
-  id: string;
+  categoryId: string;
   name: string;
 };
 
@@ -171,7 +160,7 @@ export const createAllSlides = (
   const requests = categories.flatMap((category) => {
     return [100, 200, 300, 400, 500].flatMap((price) => {
       return templateSlideRequestsForCategory({
-        categoryId: category.id,
+        categoryId: category.categoryId,
         categoryName: category.name,
         price,
       });
@@ -188,6 +177,5 @@ export const templateSlideRequestsForCategory = (input: SlideData) => {
     createSlideRequest("answer", input),
     ...createTextRequests("answer", input),
   ];
-  console.log({ requests });
   return requests;
 };

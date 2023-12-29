@@ -2,7 +2,7 @@ import { QuestionCard } from "./question-card";
 
 type CategoryProps = {
   questions: number;
-  row: number;
+  row: string;
   categoryName: string;
   gameId: string;
 };

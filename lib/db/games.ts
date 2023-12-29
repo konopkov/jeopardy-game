@@ -2,10 +2,16 @@
 import db from "@/lib/db/client";
 import ShortUniqueId from "short-unique-id";
 
+export type Category = {
+  categoryId: string;
+  name: string;
+};
+
 export type GameInput = {
   title: string;
   ownerId: string;
   presentationId: string;
+  categories: Category[];
 };
 
 export const createGame = async (data: any) => {
@@ -22,6 +28,18 @@ export const createGame = async (data: any) => {
   });
 };
 
+export const createCategories = async (
+  gameId: string,
+  categories: Category[]
+) => {
+  return await db.category.createMany({
+    data: categories.map((category) => ({
+      ...category,
+      gameId,
+    })),
+  });
+};
+
 export const findGamesByOwnerId = async (ownerId: string) => {
   return await db.game.findMany({
     where: {
@@ -34,6 +52,10 @@ export const getGame = async (id: string) => {
   return await db.game.findUnique({
     where: {
       id,
+    },
+    include: {
+      categories: true,
+      buzzer: true,
     },
   });
 };

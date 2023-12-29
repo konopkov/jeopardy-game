@@ -1,17 +1,20 @@
 import { Board } from "@/components/ui/board";
+import { getGame } from "@/lib/db/games";
 
-type GamePageProps = {
+type PlayGamePageProps = {
   params: {
     gameId: string;
   };
 };
 
-export default function GamePage({ params }: GamePageProps) {
+export default async function PlayGamePage({ params }: PlayGamePageProps) {
   const { gameId } = params;
+  const game = await getGame(gameId);
+  const categories = game?.categories!;
 
   return (
     <>
-      <Board categories={5} questions={5} gameId={gameId} />
+      <Board categories={categories} questions={5} gameId={gameId} />
     </>
   );
 }

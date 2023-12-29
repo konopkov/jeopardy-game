@@ -1,3 +1,4 @@
+import { GameForm } from "@/components/ui/create-game-form";
 import { createGameAction } from "@/lib/actions/games";
 import { findGamesByOwnerId } from "@/lib/db/games";
 import { getPresentationEditLink } from "@/lib/google-slides";
@@ -45,6 +46,8 @@ export default async function NewGamePage() {
           />
           <button type="submit">Create new game</button>
         </form>
+
+        <GameForm action={createGameAction} />
 
         <h2>Games</h2>
 

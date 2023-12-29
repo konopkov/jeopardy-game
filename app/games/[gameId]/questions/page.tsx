@@ -1,5 +1,4 @@
 import { QuestionView } from "@/components/question-view";
-import { getBuzzer } from "@/lib/db/buzzer";
 import { getGame } from "@/lib/db/games";
 import styles from "./page.module.css";
 
@@ -33,10 +32,8 @@ export default async function QuestionPage({
   const { categoryId, price } = searchParams;
 
   const game = await getGame(gameId);
+  const buzzer = game?.buzzer;
   console.log({ game });
-
-  const buzzer = await getBuzzer(gameId);
-  console.log({ buzzer });
 
   return (
     <div className={styles.container}>
