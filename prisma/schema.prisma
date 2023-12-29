@@ -60,13 +60,10 @@ model Game {
   updatedAt      DateTime   @updatedAt
   questions      Question[]
   palyers        Player[]
-  buzzer         Buzzer     @relation(fields: [buzzerId], references: [gameId])
-  buzzerId       String
 }
 
 model Buzzer {
   gameId      String  @id
-  Game        Game[]
   isAnswering Boolean
   playerName  String?
 }
