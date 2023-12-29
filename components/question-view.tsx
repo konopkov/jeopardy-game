@@ -7,6 +7,7 @@ import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
 import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
+import { FlexColumn, FlexRow } from "./ui/flex";
 
 export type QuestionViewProps = {
   gameId: string;
@@ -57,11 +58,13 @@ export const QuestionView = (props: QuestionViewProps) => {
   return (
     <Aside>
       {answering ? (
-        <div style={{ display: "flex", flexDirection: "row" }}>
+        <FlexColumn>
           <p>Answering: {answering}</p>
-          <Button onClick={handleCorrect}>Correct</Button>
-          <Button onClick={handleIncorrect}>Incorrect</Button>
-        </div>
+          <FlexRow>
+            <Button onClick={handleCorrect}>Correct</Button>
+            <Button onClick={handleIncorrect}>Incorrect</Button>
+          </FlexRow>
+        </FlexColumn>
       ) : (
         <p>Answering: --</p>
       )}

@@ -1,7 +1,9 @@
+import styles from "./aside.module.css";
+
 export type AsideProps = {
   children?: React.ReactNode;
 };
 
 export const Aside = (props: AsideProps) => {
-  return <aside style={{ gridArea: "aside" }}>{props.children ?? ""}</aside>;
+  return <aside className={styles.aside}>{props.children ?? ""}</aside>;
 };
