@@ -8,6 +8,7 @@ import { useEffect, useState, useTransition } from "react";
 import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
 import { FlexColumn, FlexRow } from "./ui/flex";
+import { Heading } from "./ui/heading";
 
 export type QuestionViewProps = {
   gameId: string;
@@ -59,14 +60,14 @@ export const QuestionView = (props: QuestionViewProps) => {
     <Aside>
       {answering ? (
         <FlexColumn>
-          <p>Answering: {answering}</p>
+          <Heading>Answering: {answering}</Heading>
           <FlexRow>
             <Button onClick={handleCorrect}>Correct</Button>
             <Button onClick={handleIncorrect}>Incorrect</Button>
           </FlexRow>
         </FlexColumn>
       ) : (
-        <p>Answering: --</p>
+        <Heading>Waiting players . . .</Heading>
       )}
     </Aside>
   );
