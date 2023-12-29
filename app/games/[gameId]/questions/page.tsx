@@ -17,7 +17,7 @@ export type QuestionPageProps = {
   searchParams: QuestionPageSearchParams;
 };
 
-export const getQuestionEmbeddedSlideUrl = (
+const getQuestionEmbeddedSlideUrl = (
   presentationId: string,
   categoryId: string,
   priceId: string

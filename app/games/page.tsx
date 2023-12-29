@@ -4,15 +4,15 @@ import { getPresentationEditLink } from "@/lib/google-slides";
 import { getUserSession } from "@/lib/session";
 import Link from "next/link";
 
-export const playGameLink = (id: string): string => {
+const playGameLink = (id: string): string => {
   return `/games/${id}/play`;
 };
 
-export const editGameLink = (id: string): string => {
+const editGameLink = (id: string): string => {
   return `/games/${id}/edit`;
 };
 
-export const signInLink = (): string => {
+const signInLink = (): string => {
   return `/api/auth/signin`;
 };
 
