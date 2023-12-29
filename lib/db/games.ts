@@ -3,7 +3,7 @@ import db from "@/lib/db/client";
 import ShortUniqueId from "short-unique-id";
 
 export type Category = {
-  categoryId: string;
+  categoryId: number;
   name: string;
 };
 

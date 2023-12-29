@@ -21,23 +21,23 @@ export const createGameAction = async (formData: FormData) => {
 
   const categories = [
     {
-      categoryId: "1",
+      categoryId: 1,
       name: category_1_name,
     },
     {
-      categoryId: "2",
+      categoryId: 2,
       name: category_2_name,
     },
     {
-      categoryId: "3",
+      categoryId: 3,
       name: category_3_name,
     },
     {
-      categoryId: "4",
+      categoryId: 4,
       name: category_4_name,
     },
     {
-      categoryId: "5",
+      categoryId: 5,
       name: category_5_name,
     },
   ];

@@ -5,6 +5,7 @@ import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 
 import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
+import { Button } from "./ui/buttons";
 
 export type QuestionViewProps = {
   gameId: string;
@@ -50,14 +51,15 @@ export const QuestionView = (props: QuestionViewProps) => {
       resetBuzzerAction(gameId);
     });
   };
+  console.log({ answering });
 
   return (
     <div>
       {answering ? (
         <>
           <p>Answering: {answering}</p>
-          <button onClick={handleCorrect}>Correct</button>
-          <button onClick={handleIncorrect}>Incorrect</button>
+          <Button onClick={handleCorrect}>Correct</Button>
+          <Button onClick={handleIncorrect}>Incorrect</Button>
         </>
       ) : null}
     </div>

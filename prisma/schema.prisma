@@ -12,7 +12,7 @@ datasource db {
 
 model Category {
   id         String @id @default(uuid())
-  categoryId String
+  categoryId Int
   name       String
   game       Game   @relation(fields: [gameId], references: [id])
   gameId     String

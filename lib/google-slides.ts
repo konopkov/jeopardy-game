@@ -77,7 +77,7 @@ export const getPresentationEditLink = (id: string): string => {
 };
 
 type SlideData = {
-  categoryId: string;
+  categoryId: number;
   categoryName: string;
   price: number;
 };
@@ -148,7 +148,7 @@ const createTextRequests = (slideType: SlideType, data: SlideData) => {
 };
 
 export type Category = {
-  categoryId: string;
+  categoryId: number;
   name: string;
 };
 

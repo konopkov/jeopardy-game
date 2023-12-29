@@ -2,7 +2,7 @@ import styles from "./board.module.css";
 import { Category } from "./category";
 
 export type Category = {
-  categoryId: string;
+  categoryId: number;
   name: string;
   gameId: string;
 };
@@ -19,7 +19,7 @@ export const Board = (props: BoardProps) => {
 
   return (
     <div className={styles.board}>
-      {categories.map((category, categoryIndex) => {
+      {categories.map((category) => {
         const rowNum = category.categoryId;
 
         return (

@@ -37,16 +37,6 @@ export default async function NewGamePage() {
       <div>
         <p>Hello, {user.name}</p>
 
-        <form action={createGameAction}>
-          <input
-            type="text"
-            name="title"
-            placeholder="Game title"
-            style={{ color: "black" }}
-          />
-          <button type="submit">Create new game</button>
-        </form>
-
         <GameForm action={createGameAction} />
 
         <h2>Games</h2>
