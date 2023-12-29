@@ -27,8 +27,11 @@ export const QuestionView = (props: QuestionViewProps) => {
 
     const channel = pusher.subscribe(gameId);
     channel.bind(PusherEvents.ANSWERING, function (data: AnsweringEvent) {
-      console.log({ data });
       setAnswering(data.playerName);
+    });
+
+    channel.bind(PusherEvents.CLEAR_ANSWERING, function (data: AnsweringEvent) {
+      setAnswering("");
     });
 
     return () => {

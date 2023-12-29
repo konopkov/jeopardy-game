@@ -22,8 +22,10 @@ export const wantToAnswerAction = async (
     useTLS: true,
   });
 
-  await setBuzzerAnswering(gameId, playerName);
-  pusher.trigger(gameId, PusherEvents.ANSWERING, { playerName });
+  const resp = await setBuzzerAnswering(gameId, playerName);
+  if (resp) {
+    pusher.trigger(gameId, PusherEvents.ANSWERING, { playerName });
+  }
 
   revalidatePath(`/games/[gameId]/questions/[questionId]`);
   revalidatePath(`/games/[gameId]/player`);
@@ -42,8 +44,7 @@ export const resetBuzzerAction = async (gameId: string) => {
   console.log("Resetting buzzer");
 
   await resetBuzzer(gameId);
-  console.log("Triggering event");
-  pusher.trigger(gameId, PusherEvents.ANSWERING, { playerName: null });
+  pusher.trigger(gameId, PusherEvents.CLEAR_ANSWERING, { playerName: null });
 
   revalidatePath(`/games/[gameId]/questions/[questionId]`);
   revalidatePath(`/games/[gameId]/player`);

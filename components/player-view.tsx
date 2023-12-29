@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/buttons";
 import { wantToAnswerAction } from "@/lib/actions/buzzer";
 import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 
@@ -28,8 +29,11 @@ export const PlayerView = (props: PlayerViewProps) => {
 
     const channel = pusher.subscribe(gameId);
     channel.bind(PusherEvents.ANSWERING, function (data: AnsweringEvent) {
-      console.log({ data });
       setAnswering(data.playerName);
+    });
+
+    channel.bind(PusherEvents.CLEAR_ANSWERING, function (data: AnsweringEvent) {
+      setAnswering("");
     });
 
     return () => {
@@ -47,12 +51,9 @@ export const PlayerView = (props: PlayerViewProps) => {
     <div>
       <p>Hello, {playerName}</p>
       {answering ? (
-        <>
-          <p>Answering: {answering}</p>
-          <button disabled>Answer (disabled)</button>
-        </>
+        <Button disabled>{answering} is answering</Button>
       ) : (
-        <button onClick={answer}>Answer</button>
+        <Button onClick={answer}>Answer</Button>
       )}
     </div>
   );

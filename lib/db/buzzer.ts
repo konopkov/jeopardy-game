@@ -5,16 +5,26 @@ export const setBuzzerAnswering = async (
   gameId: string,
   playerName: string
 ) => {
-  return await db.buzzer.update({
-    where: {
-      gameId,
-      isAnswering: false,
-    },
-    data: {
-      isAnswering: true,
-      playerName: playerName,
-    },
-  });
+  try {
+    return await db.buzzer.update({
+      where: {
+        gameId,
+        isAnswering: false,
+      },
+      data: {
+        isAnswering: true,
+        playerName: playerName,
+      },
+    });
+  } catch (error) {
+    // 'Record to update not found.'
+    if ((error as { code: string }).code === "P2025") {
+      return;
+    } else {
+      console.log(error);
+      throw error;
+    }
+  }
 };
 
 export const resetBuzzer = async (gameId: string) => {
