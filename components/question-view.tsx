@@ -5,6 +5,7 @@ import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 
 import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
+import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
 
 export type QuestionViewProps = {
@@ -54,14 +55,16 @@ export const QuestionView = (props: QuestionViewProps) => {
   console.log({ answering });
 
   return (
-    <div>
+    <Aside>
       {answering ? (
-        <>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           <p>Answering: {answering}</p>
           <Button onClick={handleCorrect}>Correct</Button>
           <Button onClick={handleIncorrect}>Incorrect</Button>
-        </>
-      ) : null}
-    </div>
+        </div>
+      ) : (
+        <p>Answering: --</p>
+      )}
+    </Aside>
   );
 };

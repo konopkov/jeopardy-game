@@ -1,3 +1,4 @@
+import { Aside } from "@/components/ui/aside";
 import { Board } from "@/components/ui/board";
 import { getGame } from "@/lib/db/games";
 
@@ -14,6 +15,7 @@ export default async function PlayGamePage({ params }: PlayGamePageProps) {
 
   return (
     <>
+      <Aside />
       <Board categories={categories} questions={5} gameId={gameId} />
     </>
   );
