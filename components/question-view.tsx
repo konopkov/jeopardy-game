@@ -1,10 +1,11 @@
 "use client";
-
-import { resetBuzzerAction } from "@/lib/actions/buzzer";
-import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
-
+import { redirect } from "next/navigation";
 import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
+
+import { resetBuzzerAction } from "@/lib/actions/buzzer";
+import { playGameLink } from "@/lib/links";
+import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
 import { FlexColumn, FlexRow } from "./ui/flex";
@@ -46,6 +47,7 @@ export const QuestionView = (props: QuestionViewProps) => {
   const handleCorrect = () => {
     startTransition(() => {
       resetBuzzerAction(gameId);
+      redirect(playGameLink(gameId));
     });
   };
 
@@ -54,7 +56,12 @@ export const QuestionView = (props: QuestionViewProps) => {
       resetBuzzerAction(gameId);
     });
   };
-  console.log({ answering });
+
+  const handleReturn = () => {
+    startTransition(() => {
+      redirect(playGameLink(gameId));
+    });
+  };
 
   return (
     <Aside>
@@ -67,7 +74,10 @@ export const QuestionView = (props: QuestionViewProps) => {
           </FlexRow>
         </FlexColumn>
       ) : (
-        <Heading>Waiting players . . .</Heading>
+        <>
+          <Heading>Waiting players . . .</Heading>
+          <Button onClick={handleReturn}>Return</Button>
+        </>
       )}
     </Aside>
   );

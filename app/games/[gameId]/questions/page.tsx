@@ -50,9 +50,6 @@ export default async function QuestionPage({
           )}
           width="1080"
           height="1024"
-          style={{
-            display: "flex",
-          }}
         />
       </div>
     </div>

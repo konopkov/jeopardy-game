@@ -1,21 +1,11 @@
+import Link from "next/link";
+
 import { GameForm } from "@/components/ui/create-game-form";
 import { createGameAction } from "@/lib/actions/games";
 import { findGamesByOwnerId } from "@/lib/db/games";
 import { getPresentationEditLink } from "@/lib/google-slides";
+import { editGameLink, playGameLink, signInLink } from "@/lib/links";
 import { getUserSession } from "@/lib/session";
-import Link from "next/link";
-
-const playGameLink = (id: string): string => {
-  return `/games/${id}/play`;
-};
-
-const editGameLink = (id: string): string => {
-  return `/games/${id}/edit`;
-};
-
-const signInLink = (): string => {
-  return `/api/auth/signin`;
-};
 
 export default async function NewGamePage() {
   const user = await getUserSession();
@@ -77,7 +67,7 @@ export default async function NewGamePage() {
       <div>
         <p>Something went wrong {(error as Error).message}</p>
         <p>
-          <Link href="/api/auth/signin">Sign in again</Link>
+          <Link href={signInLink()}>Sign in again</Link>
         </p>
       </div>
     );
