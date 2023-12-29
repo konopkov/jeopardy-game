@@ -1,5 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
+
+import { resetBuzzer } from "../db/buzzer";
 import { createGame } from "../db/games";
 import { createPresentation, createTemplateSlide } from "../google-slides";
 import { getUserSession } from "../session";
@@ -20,7 +22,8 @@ export const createGameAction = async (formData: FormData) => {
     slideType: "question" as const,
   };
   await createTemplateSlide(presentationId, templateSlideData, user);
-  await createGame({ title, presentationId, ownerId: user.id });
+  const game = await createGame({ title, presentationId, ownerId: user.id });
+  await resetBuzzer(game.id);
 
   revalidatePath(`/games`);
 };

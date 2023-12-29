@@ -5,16 +5,12 @@ export const setBuzzerAnswering = async (
   gameId: string,
   playerName: string
 ) => {
-  return await db.buzzer.upsert({
+  return await db.buzzer.update({
     where: {
       gameId,
+      isAnswering: false,
     },
-    update: {
-      isAnswering: true,
-      playerName: playerName,
-    },
-    create: {
-      gameId,
+    data: {
       isAnswering: true,
       playerName: playerName,
     },
