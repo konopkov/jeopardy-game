@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@geist-ui/core": "^2.3.8",
     "@prisma/client": "^5.7.1",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
