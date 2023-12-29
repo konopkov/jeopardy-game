@@ -7,20 +7,31 @@ export type Category = {
   gameId: string;
 };
 
+export type Answer = {
+  categoryId: number;
+  price: number;
+  playerName: string;
+};
+
 export type BoardProps = {
   categories: Category[];
   questions: number;
   gameId: string;
+  answers: Answer[];
 };
 
 export const Board = (props: BoardProps) => {
-  const { categories, gameId, questions } = props;
-  console.log({ categories });
+  const { categories, gameId, questions, answers } = props;
 
   return (
     <div className={styles.board}>
       {categories.map((category) => {
         const rowNum = category.categoryId;
+        const categoryId = category.categoryId;
+
+        const answeredPrices = answers
+          .filter((answer) => answer.categoryId === categoryId)
+          .map((answer) => answer.price);
 
         return (
           <Category
@@ -29,6 +40,7 @@ export const Board = (props: BoardProps) => {
             questions={questions}
             categoryName={category.name}
             gameId={gameId}
+            answeredPrices={answeredPrices}
           />
         );
       })}

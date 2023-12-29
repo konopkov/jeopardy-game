@@ -12,11 +12,17 @@ export default async function PlayGamePage({ params }: PlayGamePageProps) {
   const { gameId } = params;
   const game = await getGame(gameId);
   const categories = game?.categories!;
+  const answers = game?.answers!;
 
   return (
     <>
       <Aside />
-      <Board categories={categories} questions={5} gameId={gameId} />
+      <Board
+        categories={categories}
+        questions={5}
+        gameId={gameId}
+        answers={answers}
+      />
     </>
   );
 }

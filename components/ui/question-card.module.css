@@ -3,8 +3,22 @@
   justify-content: center;
   align-items: center;
   background-color: #1c1aa3;
+  font-size: 3em;
+  font-weight: 600;
+
+  color: #ffd66c;
+  cursor: pointer;
+}
+
+.questionDisabled {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c1aa3;
   color: #ffd66c;
   font-size: 3em;
   font-weight: 600;
-  cursor: pointer;
+
+  color: #4a4435;
+  cursor: not-allowed;
 }

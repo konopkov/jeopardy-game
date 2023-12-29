@@ -8,6 +8,7 @@ export type QuestionCardProps = {
   gameId: string;
   price?: string;
   categoryId?: string;
+  disabled?: boolean;
 };
 
 export const getQuestionLink = (
@@ -19,15 +20,18 @@ export const getQuestionLink = (
 };
 
 export const QuestionCard = (props: QuestionCardProps) => {
-  const { colNumber, rowNumber, text, price, categoryId, gameId } = props;
+  const { colNumber, rowNumber, text, price, categoryId, gameId, disabled } =
+    props;
 
   return (
     <>
       <Link
         href={
-          categoryId && price ? getQuestionLink(gameId, categoryId, price) : "#"
+          categoryId && price && !disabled
+            ? getQuestionLink(gameId, categoryId, price)
+            : "#"
         }
-        className={styles.question}
+        className={disabled ? styles.questionDisabled : styles.question}
       >
         <div
           style={{

@@ -33,12 +33,13 @@ export default async function QuestionPage({
 
   const game = await getGame(gameId);
   const buzzer = game?.buzzer;
-  console.log({ game });
 
   return (
     <div className={styles.container}>
       <QuestionView
         gameId={gameId}
+        categoryId={parseInt(categoryId)}
+        price={parseInt(price)}
         initialAnswering={buzzer?.isAnswering ? buzzer?.playerName : null}
       />
       <div className={styles.googleSlides}>

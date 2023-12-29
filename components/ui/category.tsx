@@ -5,6 +5,7 @@ type CategoryProps = {
   row: number;
   categoryName: string;
   gameId: string;
+  answeredPrices: number[];
 };
 
 export const Category = (props: CategoryProps) => {
@@ -17,6 +18,7 @@ export const Category = (props: CategoryProps) => {
     const cl = questionIndex + 2;
     const rn = row;
     const text = `${price}`;
+    const disabled = props.answeredPrices.includes(price);
 
     return (
       <QuestionCard
@@ -27,6 +29,7 @@ export const Category = (props: CategoryProps) => {
         categoryId={row.toString()}
         price={price.toString()}
         gameId={gameId}
+        disabled={disabled}
       />
     );
   });

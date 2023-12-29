@@ -56,6 +56,23 @@ export const getGame = async (id: string) => {
     include: {
       categories: true,
       buzzer: true,
+      answers: true,
+    },
+  });
+};
+
+export const createAnswer = async (
+  gameId: string,
+  categoryId: number,
+  price: number,
+  playerName: string
+) => {
+  return await db.answer.create({
+    data: {
+      gameId,
+      categoryId,
+      price,
+      playerName,
     },
   });
 };

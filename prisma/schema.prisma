@@ -37,6 +37,7 @@ model Game {
   players        Player[]
   categories     Category[]
   buzzer         Buzzer?
+  answers        Answer[]
 }
 
 model Buzzer {
@@ -44,4 +45,13 @@ model Buzzer {
   isAnswering Boolean
   playerName  String?
   game        Game    @relation(fields: [gameId], references: [id])
+}
+
+model Answer {
+  id         String @id @default(uuid())
+  gameId     String
+  categoryId Int
+  price      Int
+  playerName String
+  game       Game   @relation(fields: [gameId], references: [id])
 }
