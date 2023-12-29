@@ -1,3 +1,6 @@
+import { PlayerView } from "@/components/player-view";
+import { getBuzzer } from "@/lib/db/buzzer";
+
 export type GamePageParams = {
   gameId: string;
 };
@@ -11,13 +14,19 @@ export type GamePageProps = {
   searchParams: GamePageSearchParams;
 };
 
-export default function GamePage({ params, searchParams }: GamePageProps) {
+export default async function GamePage({
+  params,
+  searchParams,
+}: GamePageProps) {
+  const { gameId } = params;
   const { playerName } = searchParams;
+  const buzzer = await getBuzzer(gameId);
 
   return (
-    <div>
-      <p>Hello, {playerName}</p>
-      <p>Buzzer here</p>
-    </div>
+    <PlayerView
+      playerName={playerName}
+      gameId={gameId}
+      initialAnswering={buzzer?.isAnswering ? buzzer?.playerName : null}
+    ></PlayerView>
   );
 }
