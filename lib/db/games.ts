@@ -29,3 +29,11 @@ export const findGamesByOwnerId = async (ownerId: string) => {
     },
   });
 };
+
+export const getGame = async (id: string) => {
+  return await db.game.findUnique({
+    where: {
+      id,
+    },
+  });
+};

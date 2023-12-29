@@ -77,23 +77,24 @@ export const getPresentationEditLink = (id: string): string => {
 };
 
 type SlideData = {
-  categoryId: number;
+  categoryId: string;
   categoryName: string;
   price: number;
-  slideType: "question" | "answer";
 };
 
-const getSlideId = (data: SlideData) => {
-  const { categoryId, price, slideType } = data;
+type SlideType = "question" | "answer";
+
+const getSlideId = (slideType: SlideType, data: SlideData) => {
+  const { categoryId, price } = data;
   return `category_${categoryId}_price_${price}_${slideType}`;
 };
 
-const createSlideRequest = (data: SlideData) => {
-  const { categoryId, price, slideType } = data;
+const createSlideRequest = (slideType: SlideType, data: SlideData) => {
+  const { categoryId, price } = data;
 
   return {
     createSlide: {
-      objectId: getSlideId(data),
+      objectId: getSlideId(slideType, data),
       slideLayoutReference: {
         predefinedLayout: "BLANK",
       },
@@ -101,21 +102,21 @@ const createSlideRequest = (data: SlideData) => {
   };
 };
 
-const getCategoryTexId = (data: SlideData) => {
-  const { categoryId, price, slideType } = data;
+const getCategoryTexId = (slideType: SlideType, data: SlideData) => {
+  const { categoryId, price } = data;
   return `category_${categoryId}_price_${price}_${slideType}_text_box`;
 };
 
-const createTextRequests = (data: SlideData) => {
-  const { categoryName } = data;
+const createTextRequests = (slideType: SlideType, data: SlideData) => {
+  const { categoryName, price } = data;
 
   return [
     {
       createShape: {
-        objectId: getCategoryTexId(data),
+        objectId: getCategoryTexId(slideType, data),
         shapeType: "TEXT_BOX",
         elementProperties: {
-          pageObjectId: getSlideId(data),
+          pageObjectId: getSlideId(slideType, data),
           size: {
             width: {
               magnitude: 3000000,
@@ -138,21 +139,55 @@ const createTextRequests = (data: SlideData) => {
     },
     {
       insertText: {
-        objectId: getCategoryTexId(data),
+        objectId: getCategoryTexId(slideType, data),
         insertionIndex: 0,
-        text: `Category: ${categoryName}`,
+        text: `${categoryName} - ${price} - ${slideType}`,
       },
     },
   ];
 };
 
-export const createTemplateSlide = async (
+// export const createTemplateSlide = async (
+//   presentationId: string,
+//   input: SlideData,
+//   credentials: Credentials
+// ) => {
+//   const requests = templateSlideRequestsForCategory(input)
+//   console.log({ requests });
+
+//   return await batchUpdate(presentationId, requests, credentials);
+// };
+
+export type Category = {
+  id: string;
+  name: string;
+};
+
+export const createAllSlides = (
   presentationId: string,
-  input: SlideData,
+  categories: Category[],
   credentials: Credentials
 ) => {
-  const requests = [createSlideRequest(input), ...createTextRequests(input)];
-  console.log({ requests });
+  const requests = categories.flatMap((category) => {
+    return [100, 200, 300, 400, 500].flatMap((price) => {
+      return templateSlideRequestsForCategory({
+        categoryId: category.id,
+        categoryName: category.name,
+        price,
+      });
+    });
+  });
 
-  return await batchUpdate(presentationId, requests, credentials);
+  return batchUpdate(presentationId, requests, credentials);
+};
+
+export const templateSlideRequestsForCategory = (input: SlideData) => {
+  const requests = [
+    createSlideRequest("question", input),
+    ...createTextRequests("question", input),
+    createSlideRequest("answer", input),
+    ...createTextRequests("answer", input),
+  ];
+  console.log({ requests });
+  return requests;
 };

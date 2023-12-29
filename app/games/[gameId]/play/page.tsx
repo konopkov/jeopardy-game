@@ -7,9 +7,11 @@ type GamePageProps = {
 };
 
 export default function GamePage({ params }: GamePageProps) {
+  const { gameId } = params;
+
   return (
     <>
-      <Board categories={5} questions={5} />
+      <Board categories={5} questions={5} gameId={gameId} />
     </>
   );
 }

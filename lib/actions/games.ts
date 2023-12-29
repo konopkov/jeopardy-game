@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { resetBuzzer } from "../db/buzzer";
 import { createGame } from "../db/games";
-import { createPresentation, createTemplateSlide } from "../google-slides";
+import { createAllSlides, createPresentation } from "../google-slides";
 import { getUserSession } from "../session";
 
 export const createGameAction = async (formData: FormData) => {
@@ -15,13 +15,30 @@ export const createGameAction = async (formData: FormData) => {
   const response = await createPresentation({ title }, user);
   const presentationId = response.presentationId;
 
-  const templateSlideData = {
-    categoryId: 1,
-    categoryName: "Category 1",
-    price: 100,
-    slideType: "question" as const,
-  };
-  await createTemplateSlide(presentationId, templateSlideData, user);
+  const categories = [
+    {
+      id: "1",
+      name: "Category 1",
+    },
+    {
+      id: "2",
+      name: "Category 2",
+    },
+    {
+      id: "3",
+      name: "Category 3",
+    },
+    {
+      id: "4",
+      name: "Category 4",
+    },
+    {
+      id: "5",
+      name: "Category 5",
+    },
+  ];
+  await createAllSlides(presentationId, categories, user);
+
   const game = await createGame({ title, presentationId, ownerId: user.id });
   await resetBuzzer(game.id);
 
