@@ -3,9 +3,9 @@ export type FlexProps = {
 };
 
 export const FlexColumn = (props: FlexProps) => {
-  return <div className="flex flex-col">{props.children ?? ""}</div>;
+  return <div className="flex flex-col gap-2">{props.children ?? ""}</div>;
 };
 
 export const FlexRow = (props: FlexProps) => {
-  return <div className="flex flex-row">{props.children ?? ""}</div>;
+  return <div className="flex flex-row gap-2">{props.children ?? ""}</div>;
 };
