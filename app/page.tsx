@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { getPlayerViewLink } from "@/lib/links";
+import { playerViewLink } from "@/lib/links";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -26,10 +26,7 @@ export default function Home() {
         value={playerName}
         onChange={(e) => setPlayerName(e.target.value)}
       />
-      <Link
-        className={styles.button}
-        href={getPlayerViewLink(gameId, playerName)}
-      >
+      <Link className={styles.button} href={playerViewLink(gameId, playerName)}>
         <button>Join</button>
       </Link>
     </section>

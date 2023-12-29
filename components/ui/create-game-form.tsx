@@ -1,6 +1,3 @@
-// <!--
-//   Heads up! 👋
-
 import { Button } from "./buttons";
 import { Input } from "./input";
 

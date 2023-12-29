@@ -10,9 +10,6 @@ export const signInLink = (): string => {
   return `/api/auth/signin`;
 };
 
-export const getPlayerViewLink = (
-  gameId: string,
-  playerName: string
-): string => {
-  return `/games/${gameId}/play?playerName=${playerName}`;
+export const playerViewLink = (gameId: string, playerName: string): string => {
+  return `/games/${gameId}/player?playerName=${playerName}`;
 };

@@ -1,9 +1,12 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
+import { redirect } from "next/navigation";
 import { resetBuzzer } from "../db/buzzer";
 import { createCategories, createGame } from "../db/games";
+import { createPlayer } from "../db/players";
 import { createAllSlides, createPresentation } from "../google-slides";
+import { playerViewLink } from "../links";
 import { getUserSession } from "../session";
 
 export const createGameAction = async (formData: FormData) => {
@@ -53,4 +56,13 @@ export const createGameAction = async (formData: FormData) => {
   await resetBuzzer(game.id);
 
   revalidatePath(`/games`);
+};
+
+export const joinGameAction = async (formData: FormData) => {
+  const gameId = formData.get("game_id") as string;
+  const playerName = formData.get("player_name") as string;
+
+  await createPlayer(gameId, playerName);
+  revalidatePath(`/games/${gameId}/play`);
+  redirect(playerViewLink(gameId, playerName));
 };

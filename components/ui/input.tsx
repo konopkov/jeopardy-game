@@ -8,8 +8,9 @@
 
 export type InputProps = {
   type: string;
-  placeholder: string;
+  placeholder?: string;
   name: string;
+  value?: string;
 };
 
 export const Input = (props: InputProps) => {
