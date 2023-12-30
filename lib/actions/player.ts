@@ -2,6 +2,7 @@
 
 import { incrementScore } from "../db/player";
 
+import { revalidatePath } from "next/cache";
 import Pusher from "pusher";
 import { APP_ID, KEY, SECRET } from "../pusher/config";
 import { PusherEvents } from "../pusher/events";
@@ -32,6 +33,7 @@ export const incrementScoreAction = async (
     playerName: playerName,
     score: newScore,
   });
+  revalidatePath(`/games/${gameId}/play`);
 };
 
 export const decrementScoreAction = async (
