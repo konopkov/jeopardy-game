@@ -26,8 +26,6 @@ export const incrementScore = async (
     }),
   ]);
 
-  console.log({ result1, result2 });
-
   return result2;
 };
 

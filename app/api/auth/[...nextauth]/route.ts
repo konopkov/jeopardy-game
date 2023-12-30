@@ -1,9 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-// import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google";
 
 const providers = [
-  // CredentialsProvider(...),
   GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID!,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -24,12 +22,6 @@ const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ account, profile, user }) {
-      console.log("signIn", { account, profile, user });
-      //   if (!profile?.email) {
-      //     throw new Error("No email found");
-      //   }
-      // add prisma user
-      // token.access_token = account.access_token;
       return true;
     },
     async jwt({ token, account }) {
@@ -40,9 +32,6 @@ const authOptions: NextAuthOptions = {
       return token;
     },
     async session({ session, token, user }) {
-      // Send properties to the client, like an access_token from a provider.
-      console.log({ session, token, user });
-
       // @ts-ignore
       session.accessToken = token.accessToken;
 
@@ -50,8 +39,6 @@ const authOptions: NextAuthOptions = {
     },
   },
 };
-
-console.log({ authOptions });
 
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

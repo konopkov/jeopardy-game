@@ -14,12 +14,9 @@ export const incrementScoreAction = async (
 ) => {
   console.log("Incrementing score");
   const resp = await incrementScore(gameId, playerName, price);
-
   const newScore = resp[0].score;
-  console.log({ newScore });
 
   console.log("Creating pusher instance");
-
   const pusher = new Pusher({
     appId: APP_ID,
     key: KEY,
@@ -33,6 +30,7 @@ export const incrementScoreAction = async (
     playerName: playerName,
     score: newScore,
   });
+
   revalidatePath(`/games/[gameId]/play`, "page");
   revalidatePath(`/games/[gameId]/questions`, "page");
 
