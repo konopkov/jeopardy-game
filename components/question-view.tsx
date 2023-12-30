@@ -82,7 +82,6 @@ export const QuestionView = (props: QuestionViewProps) => {
 
     decrementScoreAction(gameId, answeringPlayerName, price);
     resetBuzzerAction(gameId);
-    setButtonsDisabled(false);
   };
 
   const handleReturn = () => {
