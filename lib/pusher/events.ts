@@ -3,6 +3,7 @@ export const PusherEvents = {
   CLEAR_ANSWERING: "CLEAR_ANSWERING",
   WANT_TO_ANSWER: "WANT_TO_ANSWER",
   SCORE_CHANGED: "SCORE_CHANGED",
+  JOIN_GAME: "JOIN_GAME",
 } as const;
 
 export type AnsweringEvent = {
@@ -20,4 +21,8 @@ export type ClearAnsweringEvent = {
 export type ScoreChangedEvent = {
   playerName: string;
   score: number;
+};
+
+export type JoinGameEvent = {
+  playerName: string;
 };

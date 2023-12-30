@@ -2,11 +2,14 @@
 import { revalidatePath } from "next/cache";
 
 import { redirect } from "next/navigation";
+import Pusher from "pusher";
 import { resetBuzzer } from "../db/buzzer";
 import { createAnswer, createCategories, createGame } from "../db/games";
 import { createPlayer } from "../db/players";
 import { createAllSlides, createPresentation } from "../google-slides";
 import { homeLink, playerViewLink } from "../links";
+import { APP_ID, KEY, SECRET } from "../pusher/config";
+import { PusherEvents } from "../pusher/events";
 import { getUserSession } from "../session";
 
 export const createGameAction = async (formData: FormData) => {
@@ -68,6 +71,22 @@ export const joinGameAction = async (formData: FormData) => {
   }
 
   await createPlayer(gameId, playerName);
+
+  console.log("Creating pusher instance");
+  const pusher = new Pusher({
+    appId: APP_ID,
+    key: KEY,
+    secret: SECRET,
+    cluster: "eu",
+    useTLS: true,
+  });
+
+  console.log("Resetting buzzer");
+
+  await pusher.trigger(gameId, PusherEvents.JOIN_GAME, {
+    playerName: playerName,
+  });
+
   revalidatePath(`/games/[gameId]/play`, "page");
   redirect(playerViewLink(gameId, playerName));
 };

@@ -19,7 +19,7 @@ export default async function PlayGamePage({ params }: PlayGamePageProps) {
   return (
     <>
       <Aside>
-        <PlayersPanel players={players} />
+        <PlayersPanel players={players} gameId={gameId} />
       </Aside>
       <Board
         categories={categories}
