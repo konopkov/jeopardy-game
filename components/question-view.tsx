@@ -69,8 +69,8 @@ export const QuestionView = (props: QuestionViewProps) => {
   }, [gameId]);
 
   const handleCorrect = () => {
+    setButtonsDisabled(true);
     startTransition(() => {
-      setButtonsDisabled(true);
       markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
       incrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
@@ -81,8 +81,8 @@ export const QuestionView = (props: QuestionViewProps) => {
   };
 
   const handleIncorrect = () => {
+    setButtonsDisabled(true);
     startTransition(() => {
-      setButtonsDisabled(true);
       decrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
     });
