@@ -3,7 +3,7 @@ import Link from "next/link";
 export type HeaderProps = {};
 
 export const Header = (props: HeaderProps) => {
-  const links = [{ href: "/games", label: "My games" }];
+  const links = [{ href: "/", label: "Home" }];
 
   return (
     <header className="mb-20" style={{ gridArea: "header" }}>

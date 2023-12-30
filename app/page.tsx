@@ -1,34 +1,46 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
 
-import { playerViewLink } from "@/lib/links";
-import styles from "./page.module.css";
+import { FlexColumn } from "@/components/ui/flex";
+import { GamesList } from "@/components/ui/games-table";
+import { Heading, SubHeading } from "@/components/ui/heading";
+import { findGamesByOwnerId } from "@/lib/db/games";
+import { createGameLink, signInLink } from "@/lib/links";
+import { getUserSession } from "@/lib/session";
 
-export default function Home() {
-  const [gameId, setGameId] = useState("");
-  const [playerName, setPlayerName] = useState("");
+export default async function NewGamePage() {
+  const user = await getUserSession();
 
-  return (
-    <section className={styles.wrapper}>
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="Game ID"
-        value={gameId}
-        onChange={(e) => setGameId(e.target.value)}
-      />
-      <input
-        className={styles.input}
-        type="text"
-        placeholder="Player Name"
-        value={playerName}
-        onChange={(e) => setPlayerName(e.target.value)}
-      />
-      <Link className={styles.button} href={playerViewLink(gameId, playerName)}>
-        <button>Join</button>
-      </Link>
-    </section>
-  );
+  if (!user) {
+    return (
+      <div>
+        <p>
+          <Link href={signInLink()}>Sign in</Link>
+        </p>
+      </div>
+    );
+  }
+
+  try {
+    const userGames = await findGamesByOwnerId(user.id);
+
+    return (
+      <FlexColumn className="gap-8">
+        <Heading>Hello, {<Link href={signInLink()}>{user.name}</Link>}</Heading>
+        <Link href={createGameLink()}>Create new game</Link>
+        <SubHeading>My games</SubHeading>
+        <GamesList games={userGames} />
+      </FlexColumn>
+    );
+  } catch (error) {
+    console.error(error);
+
+    return (
+      <div>
+        <p>Something went wrong {(error as Error).message}</p>
+        <p>
+          <Link href={signInLink()}>Sign in again</Link>
+        </p>
+      </div>
+    );
+  }
 }
