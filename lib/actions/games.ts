@@ -4,7 +4,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import Pusher from "pusher";
 import { resetBuzzer } from "../db/buzzer";
-import { createAnswer, createCategories, createGame } from "../db/games";
+import {
+  createAnswer,
+  createCategories,
+  createGame,
+  deleteGame,
+} from "../db/games";
 import { createPlayer } from "../db/players";
 import { createAllSlides, createPresentation } from "../google-slides";
 import { homeLink, playerViewLink } from "../links";
@@ -99,4 +104,14 @@ export const markAnsweredAction = async (
 ) => {
   await createAnswer(gameId, categoryId, price, playerName);
   revalidatePath(`/games/[gameId]/play`, "page");
+};
+
+export const deleteGameAction = async (formData: FormData) => {
+  const gameId = formData.get("game_id") as string;
+  const user = await getUserSession();
+
+  await deleteGame(gameId, user.id);
+
+  revalidatePath(homeLink());
+  redirect(homeLink());
 };

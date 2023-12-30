@@ -83,3 +83,12 @@ export const createAnswer = async (
     },
   });
 };
+
+export const deleteGame = async (gameId: string, ownerId: string) => {
+  return await db.game.delete({
+    where: {
+      id: gameId,
+      ownerId,
+    },
+  });
+};

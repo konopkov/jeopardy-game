@@ -1,5 +1,5 @@
 import { getPresentationEditLink } from "@/lib/google-slides";
-import { joinGameLink, playGameLink } from "@/lib/links";
+import { deleteGameLink, joinGameLink, playGameLink } from "@/lib/links";
 import Link from "next/link";
 import { FlexRow } from "./flex";
 
@@ -59,6 +59,13 @@ const GameRow = (props: Game) => {
             href={getPresentationEditLink(presentationId)}
           >
             Slides
+          </Link>
+          <Link
+            rel="noopener noreferrer"
+            target="_blank"
+            href={deleteGameLink(id)}
+          >
+            Delete
           </Link>
         </FlexRow>
       </td>

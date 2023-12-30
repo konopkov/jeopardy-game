@@ -1,11 +1,11 @@
 import { Button } from "./buttons";
 import { Input } from "./input";
 
-export type GameFormProps = {
+export type CreateGameFormProps = {
   action: any;
 };
 
-export const GameForm = (props: GameFormProps) => {
+export const CreateGameForm = (props: CreateGameFormProps) => {
   return (
     <form
       action={props.action}

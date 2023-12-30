@@ -1,6 +1,6 @@
-import { GameForm } from "@/components/ui/create-game-form";
+import { CreateGameForm } from "@/components/ui/create-game-form";
 import { createGameAction } from "@/lib/actions/games";
 
 export default function CreateGamePage() {
-  return <GameForm action={createGameAction} />;
+  return <CreateGameForm action={createGameAction} />;
 }

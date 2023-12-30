@@ -14,7 +14,7 @@ model Category {
   id         String @id @default(uuid())
   categoryId Int
   name       String
-  game       Game   @relation(fields: [gameId], references: [id])
+  game       Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
   gameId     String
 }
 
@@ -22,7 +22,7 @@ model Player {
   id         String   @id @default(uuid())
   playerName String
   createdAt  DateTime @default(now())
-  game       Game     @relation(fields: [gameId], references: [id])
+  game       Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
   gameId     String
   score      Int
 }
@@ -44,7 +44,7 @@ model Buzzer {
   gameId      String  @id @unique
   isAnswering Boolean
   playerName  String?
-  game        Game    @relation(fields: [gameId], references: [id])
+  game        Game    @relation(fields: [gameId], references: [id], onDelete: Cascade)
 }
 
 model Answer {
@@ -53,5 +53,5 @@ model Answer {
   categoryId Int
   price      Int
   playerName String
-  game       Game   @relation(fields: [gameId], references: [id])
+  game       Game   @relation(fields: [gameId], references: [id], onDelete: Cascade)
 }

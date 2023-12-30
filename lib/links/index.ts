@@ -18,6 +18,10 @@ export const createGameLink = (): string => {
   return `/games/create`;
 };
 
+export const deleteGameLink = (id: string): string => {
+  return `/games/${id}/delete`;
+};
+
 export const homeLink = (): string => {
   return `/`;
 };
