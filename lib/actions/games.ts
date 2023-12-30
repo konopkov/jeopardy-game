@@ -6,7 +6,7 @@ import { resetBuzzer } from "../db/buzzer";
 import { createAnswer, createCategories, createGame } from "../db/games";
 import { createPlayer } from "../db/players";
 import { createAllSlides, createPresentation } from "../google-slides";
-import { playerViewLink } from "../links";
+import { homeLink, playerViewLink } from "../links";
 import { getUserSession } from "../session";
 
 export const createGameAction = async (formData: FormData) => {
@@ -56,6 +56,7 @@ export const createGameAction = async (formData: FormData) => {
   await resetBuzzer(game.id);
 
   revalidatePath(`/games`);
+  redirect(homeLink());
 };
 
 export const joinGameAction = async (formData: FormData) => {

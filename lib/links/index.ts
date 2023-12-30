@@ -18,6 +18,10 @@ export const createGameLink = (): string => {
   return `/games/create`;
 };
 
+export const homeLink = (): string => {
+  return `/`;
+};
+
 export const playerViewLink = (gameId: string, playerName: string): string => {
   const encodedPlayerName = encodeURIComponent(playerName);
 
