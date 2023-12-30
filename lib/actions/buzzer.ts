@@ -1,12 +1,10 @@
 "use server";
 
 import Pusher from "pusher";
-import { resetBuzzer, setBuzzerAnswering } from "../db/buzzer";
-import { PusherEvents } from "../pusher/events";
 
-const APP_ID = process.env.PUSHER_APP_ID!;
-const SECRET = process.env.PUSHER_SECRET!;
-const KEY = process.env.NEXT_PUBLIC_PUSHER_KEY!;
+import { resetBuzzer, setBuzzerAnswering } from "../db/buzzer";
+import { APP_ID, KEY, SECRET } from "../pusher/config";
+import { PusherEvents } from "../pusher/events";
 
 export const wantToAnswerAction = async (
   gameId: string,

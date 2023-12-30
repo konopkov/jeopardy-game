@@ -6,17 +6,29 @@ export const incrementScore = async (
   playerName: string,
   price: number
 ) => {
-  return await db.player.updateMany({
-    where: {
-      gameId,
-      playerName,
-    },
-    data: {
-      score: {
-        increment: price,
+  const [result1, result2] = await db.$transaction([
+    db.player.updateMany({
+      where: {
+        gameId,
+        playerName,
       },
-    },
-  });
+      data: {
+        score: {
+          increment: price,
+        },
+      },
+    }),
+    db.player.findMany({
+      where: {
+        gameId,
+        playerName,
+      },
+    }),
+  ]);
+
+  console.log({ result1, result2 });
+
+  return result2;
 };
 
 export const decrementScore = async (

@@ -2,7 +2,12 @@
 
 import { Button } from "@/components/ui/buttons";
 import { wantToAnswerAction } from "@/lib/actions/buzzer";
-import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
+import {
+  AnsweringEvent,
+  ClearAnsweringEvent,
+  PusherEvents,
+  ScoreChangedEvent,
+} from "@/lib/pusher/events";
 
 import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
@@ -20,10 +25,11 @@ export type PlayerViewProps = {
 const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_KEY!;
 
 export const PlayerView = (props: PlayerViewProps) => {
-  const { playerName, gameId, initialAnswering } = props;
+  const { playerName, gameId, initialAnswering, score: initialScore } = props;
 
   const [_isPending, startTransition] = useTransition();
   const [answering, setAnswering] = useState(initialAnswering);
+  const [score, setScore] = useState(initialScore);
   console.log("Rendering player view");
 
   useEffect(() => {
@@ -37,14 +43,26 @@ export const PlayerView = (props: PlayerViewProps) => {
       setAnswering(data.playerName);
     });
 
-    channel.bind(PusherEvents.CLEAR_ANSWERING, function (data: AnsweringEvent) {
-      setAnswering("");
-    });
+    channel.bind(
+      PusherEvents.CLEAR_ANSWERING,
+      function (data: ClearAnsweringEvent) {
+        setAnswering("");
+      }
+    );
+
+    channel.bind(
+      PusherEvents.SCORE_CHANGED,
+      function (data: ScoreChangedEvent) {
+        if (data.playerName === playerName) {
+          setScore(data.score);
+        }
+      }
+    );
 
     return () => {
       pusher.unsubscribe(gameId);
     };
-  }, [gameId]);
+  }, [gameId, playerName]);
 
   const answer = () => {
     startTransition(() => {
@@ -54,7 +72,7 @@ export const PlayerView = (props: PlayerViewProps) => {
 
   return (
     <FlexColumn>
-      <PlayerCard playerName={playerName} score={props.score} />
+      <PlayerCard playerName={playerName} score={score} />
       {answering ? (
         <Button disabled>{answering} is answering</Button>
       ) : (

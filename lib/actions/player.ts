@@ -1,11 +1,37 @@
-import { decrementScore, incrementScore } from "../db/player";
+"use server";
+
+import { incrementScore } from "../db/player";
+
+import Pusher from "pusher";
+import { APP_ID, KEY, SECRET } from "../pusher/config";
+import { PusherEvents } from "../pusher/events";
 
 export const incrementScoreAction = async (
   gameId: string,
   playerName: string,
   price: number
 ) => {
-  await incrementScore(gameId, playerName, price);
+  console.log("Incrementing score");
+  const resp = await incrementScore(gameId, playerName, price);
+
+  const newScore = resp[0].score;
+  console.log({ newScore });
+
+  console.log("Creating pusher instance");
+
+  const pusher = new Pusher({
+    appId: APP_ID,
+    key: KEY,
+    secret: SECRET,
+    cluster: "eu",
+    useTLS: true,
+  });
+
+  console.log("Publishing score change");
+  pusher.trigger(gameId, PusherEvents.SCORE_CHANGED, {
+    playerName: playerName,
+    score: newScore,
+  });
 };
 
 export const decrementScoreAction = async (
@@ -13,5 +39,7 @@ export const decrementScoreAction = async (
   playerName: string,
   price: number
 ) => {
-  await decrementScore(gameId, playerName, price);
+  console.log("Decrementing score");
+
+  await incrementScoreAction(gameId, playerName, -price);
 };
