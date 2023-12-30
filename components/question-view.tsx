@@ -69,24 +69,32 @@ export const QuestionView = (props: QuestionViewProps) => {
   }, [gameId]);
 
   const handleCorrect = () => {
-    setButtonsDisabled(true);
+    startTransition(() => {
+      setButtonsDisabled(true);
+      markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
+      incrementScoreAction(gameId, answeringPlayerName, price);
+      resetBuzzerAction(gameId);
 
-    markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
-    incrementScoreAction(gameId, answeringPlayerName, price);
-    resetBuzzerAction(gameId);
-    redirect(playGameLink(gameId));
+      console.log("Redirecting to", playGameLink(gameId));
+      redirect(playGameLink(gameId));
+    });
   };
 
   const handleIncorrect = () => {
-    setButtonsDisabled(true);
-
-    decrementScoreAction(gameId, answeringPlayerName, price);
-    resetBuzzerAction(gameId);
+    startTransition(() => {
+      setButtonsDisabled(true);
+      decrementScoreAction(gameId, answeringPlayerName, price);
+      resetBuzzerAction(gameId);
+    });
   };
 
   const handleReturn = () => {
-    markAnsweredAction(gameId, categoryId, price, EMPTY_ANSWERING_PLAYER);
-    redirect(playGameLink(gameId));
+    startTransition(() => {
+      markAnsweredAction(gameId, categoryId, price, EMPTY_ANSWERING_PLAYER);
+
+      console.log("Redirecting to", playGameLink(gameId));
+      redirect(playGameLink(gameId));
+    });
   };
 
   return (
