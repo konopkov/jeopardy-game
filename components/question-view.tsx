@@ -4,11 +4,8 @@ import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
 
 import { resetBuzzerAction } from "@/lib/actions/buzzer";
+import { correctAnswerAction, wrongAnswerAction } from "@/lib/actions/combined";
 import { markAnsweredAction } from "@/lib/actions/games";
-import {
-  decrementScoreAction,
-  incrementScoreAction,
-} from "@/lib/actions/player";
 import { playGameLink } from "@/lib/links";
 import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 import { Aside } from "./ui/aside";
@@ -71,11 +68,13 @@ export const QuestionView = (props: QuestionViewProps) => {
   const handleCorrect = () => {
     setButtonsDisabled(true);
     startTransition(() => {
-      markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
-      incrementScoreAction(gameId, answeringPlayerName, price);
-      resetBuzzerAction(gameId);
+      correctAnswerAction({
+        gameId,
+        categoryId,
+        price,
+        answeringPlayerName,
+      });
 
-      console.log("Redirecting to", playGameLink(gameId));
       redirect(playGameLink(gameId));
     });
   };
@@ -83,9 +82,12 @@ export const QuestionView = (props: QuestionViewProps) => {
   const handleIncorrect = () => {
     setButtonsDisabled(true);
     startTransition(() => {
-      decrementScoreAction(gameId, answeringPlayerName, price);
-      resetBuzzerAction(gameId);
-      // redirect(questionLink(gameId, categoryId, price));
+      wrongAnswerAction({
+        gameId,
+        categoryId,
+        price,
+        answeringPlayerName,
+      });
     });
   };
 
