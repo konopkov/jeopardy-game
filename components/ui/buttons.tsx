@@ -5,10 +5,11 @@ interface ButtonProps {
   disabled?: boolean;
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
+  as?: "button" | "a" | "div";
 }
 
 export const Button = (props: ButtonProps) => {
-  const { children, ...restProps } = props;
+  const { children, as: As = "button", ...restProps } = props;
   const commonClasses = [
     "inline-block",
     "rounded",
@@ -17,10 +18,12 @@ export const Button = (props: ButtonProps) => {
     "py-3",
     "text-sm",
     "font-medium",
+    "border-2",
+    "rounded-lg",
   ];
 
   const enabledClasses = [
-    "border-indigo-600",
+    "border-white",
     "hover:bg-indigo-600",
     "hover:text-white",
     "focus:outline-none",
@@ -40,8 +43,8 @@ export const Button = (props: ButtonProps) => {
     : [...commonClasses, ...enabledClasses].join(" ");
 
   return (
-    <button type="button" className={className} {...restProps}>
+    <As type="button" className={className} {...restProps}>
       {props.children}
-    </button>
+    </As>
   );
 };

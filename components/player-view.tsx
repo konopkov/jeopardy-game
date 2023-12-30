@@ -6,9 +6,13 @@ import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 
 import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
+import { FlexColumn } from "./ui/flex";
+import { Heading } from "./ui/heading";
+import { PlayerCard } from "./ui/player-card";
 
 export type PlayerViewProps = {
   playerName: string;
+  score: number;
   gameId: string;
   initialAnswering: string | null;
 };
@@ -20,6 +24,7 @@ export const PlayerView = (props: PlayerViewProps) => {
 
   const [_isPending, startTransition] = useTransition();
   const [answering, setAnswering] = useState(initialAnswering);
+  console.log("Rendering player view");
 
   useEffect(() => {
     console.log("Creating pusher instance");
@@ -48,13 +53,15 @@ export const PlayerView = (props: PlayerViewProps) => {
   };
 
   return (
-    <div>
-      <p>Hello, {playerName}</p>
+    <FlexColumn>
+      <PlayerCard playerName={playerName} score={props.score} />
       {answering ? (
         <Button disabled>{answering} is answering</Button>
       ) : (
-        <Button onClick={answer}>Answer</Button>
+        <Button onClick={answer}>
+          <Heading>Answer</Heading>
+        </Button>
       )}
-    </div>
+    </FlexColumn>
   );
 };

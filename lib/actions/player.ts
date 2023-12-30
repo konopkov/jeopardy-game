@@ -6,7 +6,6 @@ export const incrementScoreAction = async (
   price: number
 ) => {
   await incrementScore(gameId, playerName, price);
-  //   revalidatePath(`/games/${gameId}/play`);
 };
 
 export const decrementScoreAction = async (
@@ -15,5 +14,4 @@ export const decrementScoreAction = async (
   price: number
 ) => {
   await decrementScore(gameId, playerName, price);
-  //   revalidatePath(`/games/${gameId}/play`);
 };

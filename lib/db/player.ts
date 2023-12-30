@@ -26,3 +26,12 @@ export const decrementScore = async (
 ) => {
   return await incrementScore(gameId, playerName, -price);
 };
+
+export const findPlayerByName = async (gameId: string, playerName: string) => {
+  return await db.player.findFirst({
+    where: {
+      gameId,
+      playerName,
+    },
+  });
+};

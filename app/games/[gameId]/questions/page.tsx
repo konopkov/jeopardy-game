@@ -33,6 +33,7 @@ export default async function QuestionPage({
 
   const game = await getGame(gameId);
   const buzzer = game?.buzzer;
+  const players = game?.players ?? [];
 
   return (
     <div className={styles.container}>
@@ -41,6 +42,7 @@ export default async function QuestionPage({
         categoryId={parseInt(categoryId)}
         price={parseInt(price)}
         initialAnswering={buzzer?.isAnswering ? buzzer?.playerName : null}
+        players={players}
       />
       <div className={styles.googleSlides}>
         <iframe

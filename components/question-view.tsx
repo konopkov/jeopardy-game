@@ -15,12 +15,19 @@ import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
 import { FlexColumn, FlexRow } from "./ui/flex";
 import { Heading } from "./ui/heading";
+import { PlayerCard } from "./ui/player-card";
+
+type Player = {
+  playerName: string;
+  score: number;
+};
 
 export type QuestionViewProps = {
   gameId: string;
   categoryId: number;
   price: number;
   initialAnswering: string | null;
+  players: Player[];
 };
 
 const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_KEY!;
@@ -33,6 +40,10 @@ export const QuestionView = (props: QuestionViewProps) => {
   const [answeringPlayerName, setAnsweringPlayerName] = useState(
     initialAnswering ?? EMPTY_ANSWERING_PLAYER
   );
+  const answeringPlayerScore =
+    props.players.find((player) => player.playerName === answeringPlayerName)
+      ?.score ?? 0;
+
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   useEffect(() => {
@@ -86,21 +97,29 @@ export const QuestionView = (props: QuestionViewProps) => {
     <Aside>
       {answeringPlayerName ? (
         <FlexColumn>
-          <Heading>Answering: {answeringPlayerName}</Heading>
           <FlexRow>
+            <Button>
+              <Heading>Answering:</Heading>
+            </Button>
+            <PlayerCard
+              playerName={answeringPlayerName}
+              score={answeringPlayerScore}
+            />
             <Button disabled={buttonsDisabled} onClick={handleCorrect}>
-              Correct
+              <Heading>+{price}</Heading>
             </Button>
             <Button disabled={buttonsDisabled} onClick={handleIncorrect}>
-              Incorrect
+              <Heading>-{price}</Heading>
             </Button>
           </FlexRow>
         </FlexColumn>
       ) : (
-        <>
-          <Heading>Waiting players . . .</Heading>
-          <Button onClick={handleReturn}>No answer</Button>
-        </>
+        <FlexColumn>
+          <FlexRow>
+            <Heading>Waiting players . . .</Heading>
+            <Button onClick={handleReturn}>No answer</Button>
+          </FlexRow>
+        </FlexColumn>
       )}
     </Aside>
   );

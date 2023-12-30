@@ -1,7 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-
 import Pusher from "pusher";
 import { resetBuzzer, setBuzzerAnswering } from "../db/buzzer";
 import { PusherEvents } from "../pusher/events";
@@ -26,9 +24,6 @@ export const wantToAnswerAction = async (
   if (resp) {
     pusher.trigger(gameId, PusherEvents.ANSWERING, { playerName });
   }
-
-  revalidatePath(`/games/[gameId]/questions/[questionId]`);
-  revalidatePath(`/games/[gameId]/player`);
 };
 
 export const resetBuzzerAction = async (gameId: string) => {
@@ -45,7 +40,4 @@ export const resetBuzzerAction = async (gameId: string) => {
 
   await resetBuzzer(gameId);
   pusher.trigger(gameId, PusherEvents.CLEAR_ANSWERING, { playerName: null });
-
-  revalidatePath(`/games/[gameId]/questions/[questionId]`);
-  revalidatePath(`/games/[gameId]/player`);
 };
