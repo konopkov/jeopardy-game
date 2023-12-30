@@ -61,10 +61,14 @@ export const createGameAction = async (formData: FormData) => {
 
 export const joinGameAction = async (formData: FormData) => {
   const gameId = formData.get("game_id") as string;
-  const playerName = formData.get("player_name") as string;
+  const playerName = (formData.get("player_name") as string).trim();
+
+  if (!gameId || !playerName) {
+    throw new Error("Missing game ID or player name");
+  }
 
   await createPlayer(gameId, playerName);
-  revalidatePath(`/games/${gameId}/play`);
+  revalidatePath(`/games/[gameId]/play`, "page");
   redirect(playerViewLink(gameId, playerName));
 };
 
@@ -75,5 +79,5 @@ export const markAnsweredAction = async (
   playerName: string
 ) => {
   await createAnswer(gameId, categoryId, price, playerName);
-  revalidatePath(`/games/${gameId}/play`);
+  revalidatePath(`/games/[gameId]/play`, "page");
 };
