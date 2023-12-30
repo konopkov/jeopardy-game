@@ -69,26 +69,27 @@ export const PlayerView = (props: PlayerViewProps) => {
     };
   }, [gameId, playerName]);
 
-  useEffect(() => {
-    let pusher: Pusher;
-    if (wantToAnswer) {
-      console.log("Creating pusher instance");
-      pusher = new Pusher(PUSHER_APP_KEY, {
-        cluster: "eu",
-      });
+  // Disabled
+  // useEffect(() => {
+  //   let pusher: Pusher;
+  //   if (wantToAnswer) {
+  //     console.log("Creating pusher instance");
+  //     pusher = new Pusher(PUSHER_APP_KEY, {
+  //       cluster: "eu",
+  //     });
 
-      const channel = pusher.subscribe(gameId);
-      console.log("Triggering CLIENT_WANT_TO_ANSWER");
-      channel.trigger(PusherEvents.CLIENT_WANT_TO_ANSWER, {
-        playerName,
-      });
-    }
+  //     const channel = pusher.subscribe(gameId);
+  //     console.log("Triggering CLIENT_WANT_TO_ANSWER");
+  //     channel.trigger(PusherEvents.CLIENT_WANT_TO_ANSWER, {
+  //       playerName,
+  //     });
+  //   }
 
-    return () => {
-      console.log("Unsubscribing from pusher");
-      pusher?.unsubscribe(gameId);
-    };
-  }, [wantToAnswer]);
+  //   return () => {
+  //     console.log("Unsubscribing from pusher");
+  //     pusher?.unsubscribe(gameId);
+  //   };
+  // }, [wantToAnswer]);
 
   const handleAnswerClick = () => {
     setWantToAnswer(true);
