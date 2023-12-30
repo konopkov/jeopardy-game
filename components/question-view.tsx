@@ -98,6 +98,13 @@ export const QuestionView = (props: QuestionViewProps) => {
     });
   };
 
+  const handleSkip = () => {
+    setButtonsDisabled(true);
+    startTransition(() => {
+      resetBuzzerAction(gameId);
+    });
+  };
+
   return (
     <Aside>
       {answeringPlayerName ? (
@@ -116,13 +123,17 @@ export const QuestionView = (props: QuestionViewProps) => {
             <Button disabled={buttonsDisabled} onClick={handleIncorrect}>
               <Heading>-{price}</Heading>
             </Button>
+            <Button disabled={buttonsDisabled} onClick={handleSkip}>
+              <Heading>Skip</Heading>
+            </Button>
           </FlexRow>
         </FlexColumn>
       ) : (
         <FlexColumn>
           <FlexRow>
-            <Heading>Waiting players . . .</Heading>
-            <Button onClick={handleReturn}>No answer</Button>
+            <Button onClick={handleReturn}>
+              <Heading>No answer</Heading>
+            </Button>
           </FlexRow>
         </FlexColumn>
       )}
