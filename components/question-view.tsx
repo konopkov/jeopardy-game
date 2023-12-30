@@ -109,9 +109,9 @@ export const QuestionView = (props: QuestionViewProps) => {
     <Aside>
       {answeringPlayerName ? (
         <FlexColumn>
-          <FlexRow>
+          <FlexColumn>
             <Button>
-              <Heading>Answering:</Heading>
+              <Heading>Answering</Heading>
             </Button>
             <PlayerCard
               playerName={answeringPlayerName}
@@ -126,7 +126,7 @@ export const QuestionView = (props: QuestionViewProps) => {
             <Button disabled={buttonsDisabled} onClick={handleSkip}>
               <Heading>Skip</Heading>
             </Button>
-          </FlexRow>
+          </FlexColumn>
         </FlexColumn>
       ) : (
         <FlexColumn>

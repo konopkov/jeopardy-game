@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FlexRow } from "./flex";
+import { FlexColumn, FlexRow } from "./flex";
 import { Heading } from "./heading";
 
 export type PlayerCardProps = {
@@ -19,8 +19,10 @@ export const PlayerCard = (props: PlayerCardProps) => {
         height={80}
         alt={playerName}
       />
-      <Heading>{playerName}</Heading>
-      <Heading>{score}</Heading>
+      <FlexColumn>
+        <Heading>{playerName}</Heading>
+        <Heading>{score}</Heading>
+      </FlexColumn>
     </FlexRow>
   );
 };

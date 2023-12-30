@@ -1,5 +1,6 @@
 import { Aside } from "@/components/ui/aside";
 import { Board } from "@/components/ui/board";
+import { Main } from "@/components/ui/main";
 import { PlayersPanel } from "@/components/ui/players-panel";
 import { getGame } from "@/lib/db/games";
 
@@ -21,12 +22,14 @@ export default async function PlayGamePage({ params }: PlayGamePageProps) {
       <Aside>
         <PlayersPanel players={players} gameId={gameId} />
       </Aside>
-      <Board
-        categories={categories}
-        questions={5}
-        gameId={gameId}
-        answers={answers}
-      />
+      <Main>
+        <Board
+          categories={categories}
+          questions={5}
+          gameId={gameId}
+          answers={answers}
+        />
+      </Main>
     </>
   );
 }

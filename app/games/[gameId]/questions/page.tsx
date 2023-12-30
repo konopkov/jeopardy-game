@@ -1,4 +1,6 @@
 import { QuestionView } from "@/components/question-view";
+import { Aside } from "@/components/ui/aside";
+import { Main } from "@/components/ui/main";
 import { getGame } from "@/lib/db/games";
 import styles from "./page.module.css";
 
@@ -36,25 +38,29 @@ export default async function QuestionPage({
   const players = game?.players ?? [];
 
   return (
-    <div className={styles.container}>
-      <QuestionView
-        gameId={gameId}
-        categoryId={parseInt(categoryId)}
-        price={parseInt(price)}
-        initialAnswering={buzzer?.isAnswering ? buzzer?.playerName : null}
-        players={players}
-      />
-      <div className={styles.googleSlides}>
-        <iframe
-          src={getQuestionEmbeddedSlideUrl(
-            game?.presentationId!,
-            categoryId,
-            price
-          )}
-          width="1080"
-          height="1024"
+    <>
+      <Aside>
+        <QuestionView
+          gameId={gameId}
+          categoryId={parseInt(categoryId)}
+          price={parseInt(price)}
+          initialAnswering={buzzer?.isAnswering ? buzzer?.playerName : null}
+          players={players}
         />
-      </div>
-    </div>
+      </Aside>
+      <Main>
+        <div className={styles.googleSlides}>
+          <iframe
+            src={getQuestionEmbeddedSlideUrl(
+              game?.presentationId!,
+              categoryId,
+              price
+            )}
+            width="1080"
+            height="1024"
+          />
+        </div>
+      </Main>
+    </>
   );
 }

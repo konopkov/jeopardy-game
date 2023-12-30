@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { KEY } from "@/lib/pusher/config";
 import { JoinGameEvent, PusherEvents } from "@/lib/pusher/events";
-import { FlexRow } from "./flex";
+import { FlexColumn } from "./flex";
 import { PlayerCard, PlayerCardProps } from "./player-card";
 
 export type playersPanelProps = {
@@ -41,10 +41,10 @@ export const PlayersPanel = (props: playersPanelProps) => {
   }, [gameId]);
 
   return (
-    <FlexRow className="gap-4">
+    <FlexColumn className="gap-4">
       {players.map((player) => (
         <PlayerCard key={player.playerName} {...player} />
       ))}
-    </FlexRow>
+    </FlexColumn>
   );
 };

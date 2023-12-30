@@ -1,9 +1,23 @@
 .page {
   display: grid;
-  grid-template-columns: 1fr;
+  gap: 20px;
+  grid-template-columns: 260px 1fr;
   grid-template-rows: 60px 100px auto;
   grid-template-areas:
-    "header"
-    "aside"
-    "main";
+    "header main"
+    "aside main"
+    "aside main";
+}
+
+/* for small screens: another grid template */
+@media (max-width: 600px) {
+  .page {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60px 100px auto auto;
+    grid-template-areas:
+      "header"
+      "main"
+      "aside"
+      "footer";
+  }
 }
