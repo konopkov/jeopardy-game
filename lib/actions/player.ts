@@ -29,7 +29,7 @@ export const incrementScoreAction = async (
   });
 
   console.log("Publishing score change");
-  pusher.trigger(gameId, PusherEvents.SCORE_CHANGED, {
+  await pusher.trigger(gameId, PusherEvents.SCORE_CHANGED, {
     playerName: playerName,
     score: newScore,
   });

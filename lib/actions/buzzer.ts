@@ -20,7 +20,7 @@ export const wantToAnswerAction = async (
 
   const resp = await setBuzzerAnswering(gameId, playerName);
   if (resp) {
-    pusher.trigger(gameId, PusherEvents.ANSWERING, { playerName });
+    await pusher.trigger(gameId, PusherEvents.ANSWERING, { playerName });
   }
 };
 
@@ -37,5 +37,7 @@ export const resetBuzzerAction = async (gameId: string) => {
   console.log("Resetting buzzer");
 
   await resetBuzzer(gameId);
-  pusher.trigger(gameId, PusherEvents.CLEAR_ANSWERING, { playerName: null });
+  await pusher.trigger(gameId, PusherEvents.CLEAR_ANSWERING, {
+    playerName: null,
+  });
 };
