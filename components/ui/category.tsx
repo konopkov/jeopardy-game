@@ -26,8 +26,8 @@ export const Category = (props: CategoryProps) => {
         colNumber={cl}
         rowNumber={rn}
         text={text}
-        categoryId={row.toString()}
-        price={price.toString()}
+        categoryId={row}
+        price={price}
         gameId={gameId}
         disabled={disabled}
       />

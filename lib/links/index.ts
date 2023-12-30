@@ -15,3 +15,11 @@ export const playerViewLink = (gameId: string, playerName: string): string => {
 
   return `/games/${gameId}/player?playerName=${encodedPlayerName}`;
 };
+
+export const questionLink = (
+  gameId: string,
+  categoryId: number,
+  price: number
+) => {
+  return `/games/${gameId}/questions?categoryId=${categoryId}&price=${price}`;
+};

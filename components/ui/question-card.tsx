@@ -1,3 +1,4 @@
+import { questionLink } from "@/lib/links";
 import Link from "next/link";
 import styles from "./question-card.module.css";
 
@@ -6,17 +7,9 @@ export type QuestionCardProps = {
   rowNumber: number;
   text: string;
   gameId: string;
-  price?: string;
-  categoryId?: string;
+  price?: number;
+  categoryId?: number;
   disabled?: boolean;
-};
-
-export const getQuestionLink = (
-  gameId: string,
-  categoryId: string,
-  price: string
-) => {
-  return `/games/${gameId}/questions?categoryId=${categoryId}&price=${price}`;
 };
 
 export const QuestionCard = (props: QuestionCardProps) => {
@@ -28,7 +21,7 @@ export const QuestionCard = (props: QuestionCardProps) => {
       <Link
         href={
           categoryId && price && !disabled
-            ? getQuestionLink(gameId, categoryId, price)
+            ? questionLink(gameId, categoryId, price)
             : "#"
         }
         className={disabled ? styles.questionDisabled : styles.question}
