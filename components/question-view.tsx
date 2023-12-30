@@ -85,6 +85,7 @@ export const QuestionView = (props: QuestionViewProps) => {
     startTransition(() => {
       decrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
+      redirect(playGameLink(gameId));
     });
   };
 
