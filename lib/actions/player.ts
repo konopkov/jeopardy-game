@@ -34,6 +34,7 @@ export const incrementScoreAction = async (
     score: newScore,
   });
   revalidatePath(`/games/${gameId}/play`);
+  revalidatePath(`/games/${gameId}/questions`);
 };
 
 export const decrementScoreAction = async (
