@@ -57,6 +57,7 @@ export const getGame = async (id: string) => {
       categories: true,
       buzzer: true,
       answers: true,
+      players: true,
     },
   });
 };

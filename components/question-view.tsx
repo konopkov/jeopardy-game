@@ -5,6 +5,10 @@ import { useEffect, useState, useTransition } from "react";
 
 import { resetBuzzerAction } from "@/lib/actions/buzzer";
 import { markAnsweredAction } from "@/lib/actions/games";
+import {
+  decrementScoreAction,
+  incrementScoreAction,
+} from "@/lib/actions/player";
 import { playGameLink } from "@/lib/links";
 import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 import { Aside } from "./ui/aside";
@@ -26,7 +30,7 @@ export const QuestionView = (props: QuestionViewProps) => {
   const { gameId, initialAnswering, categoryId, price } = props;
 
   const [_isPending, startTransition] = useTransition();
-  const [answeringPlayer, setAnsweringPlayer] = useState(
+  const [answeringPlayerName, setAnsweringPlayerName] = useState(
     initialAnswering ?? EMPTY_ANSWERING_PLAYER
   );
 
@@ -38,11 +42,11 @@ export const QuestionView = (props: QuestionViewProps) => {
 
     const channel = pusher.subscribe(gameId);
     channel.bind(PusherEvents.ANSWERING, function (data: AnsweringEvent) {
-      setAnsweringPlayer(data.playerName);
+      setAnsweringPlayerName(data.playerName);
     });
 
     channel.bind(PusherEvents.CLEAR_ANSWERING, function (data: AnsweringEvent) {
-      setAnsweringPlayer(EMPTY_ANSWERING_PLAYER);
+      setAnsweringPlayerName(EMPTY_ANSWERING_PLAYER);
     });
 
     return () => {
@@ -52,7 +56,8 @@ export const QuestionView = (props: QuestionViewProps) => {
 
   const handleCorrect = () => {
     startTransition(() => {
-      markAnsweredAction(gameId, categoryId, price, answeringPlayer);
+      markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
+      incrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
       redirect(playGameLink(gameId));
     });
@@ -60,6 +65,7 @@ export const QuestionView = (props: QuestionViewProps) => {
 
   const handleIncorrect = () => {
     startTransition(() => {
+      decrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
     });
   };
@@ -73,9 +79,9 @@ export const QuestionView = (props: QuestionViewProps) => {
 
   return (
     <Aside>
-      {answeringPlayer ? (
+      {answeringPlayerName ? (
         <FlexColumn>
-          <Heading>Answering: {answeringPlayer}</Heading>
+          <Heading>Answering: {answeringPlayerName}</Heading>
           <FlexRow>
             <Button onClick={handleCorrect}>Correct</Button>
             <Button onClick={handleIncorrect}>Incorrect</Button>

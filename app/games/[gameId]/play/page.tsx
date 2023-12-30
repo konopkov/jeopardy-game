@@ -1,5 +1,6 @@
 import { Aside } from "@/components/ui/aside";
 import { Board } from "@/components/ui/board";
+import { PlayersPanel } from "@/components/ui/players-panel";
 import { getGame } from "@/lib/db/games";
 
 type PlayGamePageProps = {
@@ -13,10 +14,13 @@ export default async function PlayGamePage({ params }: PlayGamePageProps) {
   const game = await getGame(gameId);
   const categories = game?.categories!;
   const answers = game?.answers!;
+  const players = game?.players!;
 
   return (
     <>
-      <Aside />
+      <Aside>
+        <PlayersPanel players={players} />
+      </Aside>
       <Board
         categories={categories}
         questions={5}
