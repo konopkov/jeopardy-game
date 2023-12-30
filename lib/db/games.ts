@@ -42,8 +42,14 @@ export const createCategories = async (
 
 export const findGamesByOwnerId = async (ownerId: string) => {
   return await db.game.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
     where: {
       ownerId,
+    },
+    include: {
+      categories: true,
     },
   });
 };

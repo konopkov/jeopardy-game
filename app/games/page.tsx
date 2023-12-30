@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-import { GameForm } from "@/components/ui/create-game-form";
-import { createGameAction } from "@/lib/actions/games";
+import { FlexColumn } from "@/components/ui/flex";
+import { GamesList } from "@/components/ui/games-table";
+import { Heading, SubHeading } from "@/components/ui/heading";
 import { findGamesByOwnerId } from "@/lib/db/games";
-import { getPresentationEditLink } from "@/lib/google-slides";
-import { editGameLink, playGameLink, signInLink } from "@/lib/links";
+import { createGameLink, signInLink } from "@/lib/links";
 import { getUserSession } from "@/lib/session";
 
 export default async function NewGamePage() {
@@ -24,41 +24,12 @@ export default async function NewGamePage() {
     const userGames = await findGamesByOwnerId(user.id);
 
     return (
-      <div>
-        <p>Hello, {user.name}</p>
-
-        <GameForm action={createGameAction} />
-
-        <h2>Games</h2>
-
-        {userGames.map((game) => (
-          <div key={game.id}>
-            <p>{game.title}</p>
-            <p>{game.id}</p>
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
-              href={getPresentationEditLink(game.presentationId)}
-            >
-              Edit presentation
-            </Link>
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
-              href={playGameLink(game.id)}
-            >
-              Play game
-            </Link>
-            <Link
-              rel="noopener noreferrer"
-              target="_blank"
-              href={editGameLink(game.id)}
-            >
-              Edit game
-            </Link>
-          </div>
-        ))}
-      </div>
+      <FlexColumn className="gap-8">
+        <Heading>Hello, {<Link href={signInLink()}>{user.name}</Link>}</Heading>
+        <Link href={createGameLink()}>Create new game</Link>
+        <SubHeading>My games</SubHeading>
+        <GamesList games={userGames} />
+      </FlexColumn>
     );
   } catch (error) {
     console.error(error);

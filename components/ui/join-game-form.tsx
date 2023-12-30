@@ -1,4 +1,5 @@
 import { Button } from "./buttons";
+import { FlexColumn } from "./flex";
 import { Input } from "./input";
 
 type JoinGameFormProps = {
@@ -12,9 +13,11 @@ export const JoinGameForm = (props: JoinGameFormProps) => {
       action={props.action}
       className="mx-auto mb-0 mt-8 max-w-md space-y-4"
     >
-      <Input type="hidden" name="game_id" value={props.gameId} />
-      <Input type="text" name="player_name" placeholder="Player name" />
-      <Button type="submit">Join</Button>
+      <FlexColumn>
+        <Input type="hidden" name="game_id" value={props.gameId} />
+        <Input type="text" name="player_name" placeholder="Player name" />
+        <Button type="submit">Join</Button>
+      </FlexColumn>
     </form>
   );
 };

@@ -2,12 +2,20 @@ export const playGameLink = (id: string): string => {
   return `/games/${id}/play`;
 };
 
+export const joinGameLink = (id: string): string => {
+  return `/games/${id}/join`;
+};
+
 export const editGameLink = (id: string): string => {
   return `/games/${id}/edit`;
 };
 
 export const signInLink = (): string => {
   return `/api/auth/signin`;
+};
+
+export const createGameLink = (): string => {
+  return `/games/create`;
 };
 
 export const playerViewLink = (gameId: string, playerName: string): string => {
