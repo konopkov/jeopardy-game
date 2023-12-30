@@ -9,7 +9,7 @@ import {
   decrementScoreAction,
   incrementScoreAction,
 } from "@/lib/actions/player";
-import { playGameLink } from "@/lib/links";
+import { playGameLink, questionLink } from "@/lib/links";
 import { AnsweringEvent, PusherEvents } from "@/lib/pusher/events";
 import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
@@ -85,7 +85,7 @@ export const QuestionView = (props: QuestionViewProps) => {
     startTransition(() => {
       decrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
-      redirect(playGameLink(gameId));
+      redirect(questionLink(gameId, categoryId, price));
     });
   };
 
