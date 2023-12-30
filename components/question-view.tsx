@@ -33,6 +33,7 @@ export const QuestionView = (props: QuestionViewProps) => {
   const [answeringPlayerName, setAnsweringPlayerName] = useState(
     initialAnswering ?? EMPTY_ANSWERING_PLAYER
   );
+  const [buttonsDisabled, setButtonsDisabled] = useState(false);
 
   useEffect(() => {
     console.log("Creating pusher instance");
@@ -42,10 +43,12 @@ export const QuestionView = (props: QuestionViewProps) => {
 
     const channel = pusher.subscribe(gameId);
     channel.bind(PusherEvents.ANSWERING, function (data: AnsweringEvent) {
+      setButtonsDisabled(false);
       setAnsweringPlayerName(data.playerName);
     });
 
     channel.bind(PusherEvents.CLEAR_ANSWERING, function (data: AnsweringEvent) {
+      setButtonsDisabled(false);
       setAnsweringPlayerName(EMPTY_ANSWERING_PLAYER);
     });
 
@@ -55,6 +58,7 @@ export const QuestionView = (props: QuestionViewProps) => {
   }, [gameId]);
 
   const handleCorrect = () => {
+    setButtonsDisabled(true);
     startTransition(() => {
       markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
       incrementScoreAction(gameId, answeringPlayerName, price);
@@ -64,6 +68,7 @@ export const QuestionView = (props: QuestionViewProps) => {
   };
 
   const handleIncorrect = () => {
+    setButtonsDisabled(true);
     startTransition(() => {
       decrementScoreAction(gameId, answeringPlayerName, price);
       resetBuzzerAction(gameId);
@@ -83,8 +88,12 @@ export const QuestionView = (props: QuestionViewProps) => {
         <FlexColumn>
           <Heading>Answering: {answeringPlayerName}</Heading>
           <FlexRow>
-            <Button onClick={handleCorrect}>Correct</Button>
-            <Button onClick={handleIncorrect}>Incorrect</Button>
+            <Button disabled={buttonsDisabled} onClick={handleCorrect}>
+              Correct
+            </Button>
+            <Button disabled={buttonsDisabled} onClick={handleIncorrect}>
+              Incorrect
+            </Button>
           </FlexRow>
         </FlexColumn>
       ) : (
