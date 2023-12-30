@@ -11,5 +11,7 @@ export const signInLink = (): string => {
 };
 
 export const playerViewLink = (gameId: string, playerName: string): string => {
-  return `/games/${gameId}/player?playerName=${playerName}`;
+  const encodedPlayerName = encodeURIComponent(playerName);
+
+  return `/games/${gameId}/player?playerName=${encodedPlayerName}`;
 };
