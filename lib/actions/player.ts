@@ -35,6 +35,8 @@ export const incrementScoreAction = async (
   });
   revalidatePath(`/games/[gameId]/play`, "page");
   revalidatePath(`/games/[gameId]/questions`, "page");
+
+  return;
 };
 
 export const decrementScoreAction = async (
@@ -45,4 +47,6 @@ export const decrementScoreAction = async (
   console.log("Decrementing score");
 
   await incrementScoreAction(gameId, playerName, -price);
+
+  return;
 };

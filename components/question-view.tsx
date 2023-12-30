@@ -70,27 +70,23 @@ export const QuestionView = (props: QuestionViewProps) => {
 
   const handleCorrect = () => {
     setButtonsDisabled(true);
-    startTransition(() => {
-      markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
-      incrementScoreAction(gameId, answeringPlayerName, price);
-      resetBuzzerAction(gameId);
-      redirect(playGameLink(gameId));
-    });
+
+    markAnsweredAction(gameId, categoryId, price, answeringPlayerName);
+    incrementScoreAction(gameId, answeringPlayerName, price);
+    resetBuzzerAction(gameId);
+    redirect(playGameLink(gameId));
   };
 
   const handleIncorrect = () => {
     setButtonsDisabled(true);
-    startTransition(() => {
-      decrementScoreAction(gameId, answeringPlayerName, price);
-      resetBuzzerAction(gameId);
-    });
+
+    decrementScoreAction(gameId, answeringPlayerName, price);
+    resetBuzzerAction(gameId);
   };
 
   const handleReturn = () => {
-    startTransition(() => {
-      markAnsweredAction(gameId, categoryId, price, EMPTY_ANSWERING_PLAYER);
-      redirect(playGameLink(gameId));
-    });
+    markAnsweredAction(gameId, categoryId, price, EMPTY_ANSWERING_PLAYER);
+    redirect(playGameLink(gameId));
   };
 
   return (
