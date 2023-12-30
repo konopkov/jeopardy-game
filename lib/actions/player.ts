@@ -33,8 +33,8 @@ export const incrementScoreAction = async (
     playerName: playerName,
     score: newScore,
   });
-  revalidatePath(`/games/[gameId]/play`);
-  revalidatePath(`/games/[gameId]/questions`);
+  revalidatePath(`/games/[gameId]/play`, "page");
+  revalidatePath(`/games/[gameId]/questions`, "page");
 };
 
 export const decrementScoreAction = async (
