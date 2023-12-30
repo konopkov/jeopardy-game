@@ -34,7 +34,7 @@ export const Button = (props: ButtonProps) => {
   const disabledClasses = [
     "bg-gray-200",
     "border-gray-200",
-    "text-gray-500",
+    "text-gray-900",
     "cursor-not-allowed",
   ];
 

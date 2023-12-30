@@ -6,7 +6,9 @@ export type FlexProps = {
 export const FlexColumn = (props: FlexProps) => {
   return (
     <div
-      className={`flex flex-col gap-2 content-stretch items-stretch ${props.className}`}
+      className={`flex flex-col gap-2 content-stretch items-stretch ${
+        props.className ?? ""
+      }`}
     >
       {props.children ?? ""}
     </div>
@@ -16,7 +18,9 @@ export const FlexColumn = (props: FlexProps) => {
 export const FlexRow = (props: FlexProps) => {
   return (
     <div
-      className={`flex flex-row gap-2 content-stretch items-stretch  ${props.className}`}
+      className={`flex flex-row gap-2 content-stretch items-center ${
+        props.className ?? ""
+      }`}
     >
       {props.children ?? ""}
     </div>

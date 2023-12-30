@@ -12,6 +12,7 @@ import { Aside } from "./ui/aside";
 import { Button } from "./ui/buttons";
 import { FlexColumn, FlexRow } from "./ui/flex";
 import { Heading } from "./ui/heading";
+import { Loading } from "./ui/icons/loading";
 import { PlayerCard } from "./ui/player-card";
 
 type Player = {
@@ -42,6 +43,7 @@ export const QuestionView = (props: QuestionViewProps) => {
       ?.score ?? 0;
 
   const [buttonsDisabled, setButtonsDisabled] = useState(false);
+  const [wantToAnswer, setWantToAnswer] = useState(false);
 
   useEffect(() => {
     console.log("Creating pusher instance");
@@ -51,14 +53,23 @@ export const QuestionView = (props: QuestionViewProps) => {
 
     const channel = pusher.subscribe(gameId);
     channel.bind(PusherEvents.ANSWERING, function (data: AnsweringEvent) {
+      setWantToAnswer(false);
       setButtonsDisabled(false);
       setAnsweringPlayerName(data.playerName);
     });
 
     channel.bind(PusherEvents.CLEAR_ANSWERING, function (data: AnsweringEvent) {
+      setWantToAnswer(false);
       setButtonsDisabled(false);
       setAnsweringPlayerName(EMPTY_ANSWERING_PLAYER);
     });
+
+    channel.bind(
+      PusherEvents.CLIENT_WANT_TO_ANSWER,
+      function (data: AnsweringEvent) {
+        setWantToAnswer(true);
+      }
+    );
 
     return () => {
       pusher.unsubscribe(gameId);
@@ -107,6 +118,8 @@ export const QuestionView = (props: QuestionViewProps) => {
     });
   };
 
+  console.log({ wantToAnswer });
+
   return (
     <Aside>
       {answeringPlayerName ? (
@@ -134,7 +147,14 @@ export const QuestionView = (props: QuestionViewProps) => {
         <FlexColumn>
           <FlexRow>
             <Button onClick={handleReturn}>
-              <Heading>No answer</Heading>
+              {wantToAnswer ? (
+                <FlexRow className="justify-center">
+                  <Loading />
+                  <Heading>Answer</Heading>
+                </FlexRow>
+              ) : (
+                <Heading>No answer</Heading>
+              )}
             </Button>
           </FlexRow>
         </FlexColumn>

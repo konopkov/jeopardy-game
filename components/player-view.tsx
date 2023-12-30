@@ -9,10 +9,11 @@ import {
   ScoreChangedEvent,
 } from "@/lib/pusher/events";
 
+import { Loading } from "@/components/ui/icons/loading";
 import Pusher from "pusher-js";
 import { useEffect, useState, useTransition } from "react";
-import { FlexColumn } from "./ui/flex";
-import { Heading } from "./ui/heading";
+import { FlexColumn, FlexRow } from "./ui/flex";
+import { Heading, HeadingGray } from "./ui/heading";
 import { PlayerCard } from "./ui/player-card";
 
 export type PlayerViewProps = {
@@ -30,7 +31,9 @@ export const PlayerView = (props: PlayerViewProps) => {
   const [_isPending, startTransition] = useTransition();
   const [answering, setAnswering] = useState(initialAnswering);
   const [score, setScore] = useState(initialScore);
+  const [wantToAnswer, setWantToAnswer] = useState(false);
   console.log("Rendering player view");
+  console.log({ wantToAnswer });
 
   useEffect(() => {
     console.log("Creating pusher instance");
@@ -41,12 +44,14 @@ export const PlayerView = (props: PlayerViewProps) => {
     const channel = pusher.subscribe(gameId);
     channel.bind(PusherEvents.ANSWERING, function (data: AnsweringEvent) {
       setAnswering(data.playerName);
+      setWantToAnswer(false);
     });
 
     channel.bind(
       PusherEvents.CLEAR_ANSWERING,
       function (data: ClearAnsweringEvent) {
         setAnswering("");
+        setWantToAnswer(false);
       }
     );
 
@@ -64,7 +69,29 @@ export const PlayerView = (props: PlayerViewProps) => {
     };
   }, [gameId, playerName]);
 
-  const answer = () => {
+  useEffect(() => {
+    let pusher: Pusher;
+    if (wantToAnswer) {
+      console.log("Creating pusher instance");
+      pusher = new Pusher(PUSHER_APP_KEY, {
+        cluster: "eu",
+      });
+
+      const channel = pusher.subscribe(gameId);
+      console.log("Triggering CLIENT_WANT_TO_ANSWER");
+      channel.trigger(PusherEvents.CLIENT_WANT_TO_ANSWER, {
+        playerName,
+      });
+    }
+
+    return () => {
+      console.log("Unsubscribing from pusher");
+      pusher?.unsubscribe(gameId);
+    };
+  }, [wantToAnswer]);
+
+  const handleAnswerClick = () => {
+    setWantToAnswer(true);
     startTransition(() => {
       wantToAnswerAction(gameId, playerName);
     });
@@ -74,10 +101,19 @@ export const PlayerView = (props: PlayerViewProps) => {
     <FlexColumn>
       <PlayerCard playerName={playerName} score={score} />
       {answering ? (
-        <Button disabled>{answering} is answering</Button>
+        <Button disabled>
+          <HeadingGray>{answering} is answering </HeadingGray>
+        </Button>
       ) : (
-        <Button onClick={answer}>
-          <Heading>Answer</Heading>
+        <Button onClick={handleAnswerClick}>
+          {wantToAnswer ? (
+            <FlexRow className="justify-center">
+              <Loading />
+              <Heading>Answer</Heading>
+            </FlexRow>
+          ) : (
+            <Heading>Answer</Heading>
+          )}
         </Button>
       )}
     </FlexColumn>

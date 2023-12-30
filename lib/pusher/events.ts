@@ -4,6 +4,7 @@ export const PusherEvents = {
   WANT_TO_ANSWER: "WANT_TO_ANSWER",
   SCORE_CHANGED: "SCORE_CHANGED",
   JOIN_GAME: "JOIN_GAME",
+  CLIENT_WANT_TO_ANSWER: "client-WANT_TO_ANSWER",
 } as const;
 
 export type AnsweringEvent = {
