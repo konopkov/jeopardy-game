@@ -56,8 +56,8 @@ export default async function QuestionPage({
               categoryId,
               price
             )}
-            width="1080"
-            height="1024"
+            // width="1080"
+            // height="1024"
           />
         </div>
       </Main>
