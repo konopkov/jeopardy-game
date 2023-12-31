@@ -15,7 +15,12 @@ export const JoinGameForm = (props: JoinGameFormProps) => {
     >
       <FlexColumn>
         <Input type="hidden" name="game_id" value={props.gameId} />
-        <Input type="text" name="player_name" placeholder="Player name" />
+        <Input
+          type="text"
+          name="player_name"
+          placeholder="Player name"
+          autoFocus={true}
+        />
         <Button type="submit">Join</Button>
       </FlexColumn>
     </form>

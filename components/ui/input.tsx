@@ -11,7 +11,7 @@ export type InputProps = {
   placeholder?: string;
   name: string;
   value?: string;
-};
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const Input = (props: InputProps) => {
   const classNames = [
