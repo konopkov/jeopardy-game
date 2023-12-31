@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   background-color: #1c1aa3;
-  font-size: 3em;
+  font-size: min(4vh, 4vw);
   font-weight: 600;
 
   color: #ffd66c;
@@ -16,18 +16,9 @@
   align-items: center;
   background-color: #1c1aa3;
   color: #ffd66c;
-  font-size: 3em;
+  font-size: min(4vh, 4vw);
   font-weight: 600;
 
   color: #4a4435;
   cursor: not-allowed;
-}
-/* media query for small screens max-width and max-height */
-@media (max-width: 1200px) or (max-height: 800px) {
-  .question {
-    font-size: 2em;
-  }
-  .questionDisabled {
-    font-size: 2em;
-  }
 }
