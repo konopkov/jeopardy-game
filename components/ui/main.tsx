@@ -5,5 +5,5 @@ export type MainProps = {
 };
 
 export const Main = (props: MainProps) => {
-  return <aside className={styles.main}>{props.children ?? ""}</aside>;
+  return <main className={styles.main}>{props.children ?? ""}</main>;
 };
