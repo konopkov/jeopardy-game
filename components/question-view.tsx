@@ -72,7 +72,7 @@ export const QuestionView = (props: QuestionViewProps) => {
     );
 
     return () => {
-      pusher.unsubscribe(gameId);
+      pusher.disconnect();
     };
   }, [gameId]);
 

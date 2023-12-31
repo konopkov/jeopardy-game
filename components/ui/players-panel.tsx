@@ -36,7 +36,7 @@ export const PlayersPanel = (props: playersPanelProps) => {
     });
 
     return () => {
-      pusher.unsubscribe(gameId);
+      pusher.disconnect();
     };
   }, [gameId]);
 
