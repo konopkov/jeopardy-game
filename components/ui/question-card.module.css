@@ -23,11 +23,11 @@
   cursor: not-allowed;
 }
 /* media query for small screens max-width and max-height */
-@media (max-width: 1200px) or (max-height: 1000px) {
+@media (max-width: 1200px) or (max-height: 800px) {
   .question {
-    font-size: 1.5em;
+    font-size: 2em;
   }
   .questionDisabled {
-    font-size: 1.5em;
+    font-size: 2em;
   }
 }
