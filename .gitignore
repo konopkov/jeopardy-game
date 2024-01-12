@@ -39,3 +39,7 @@ next-env.d.ts
 .env.dev
 
 .dist
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out

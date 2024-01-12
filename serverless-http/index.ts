@@ -17,8 +17,6 @@ export default function serverless(app, opts) {
 
   // @ts-ignore
   return provider(async (request, ...context) => {
-    console.log(JSON.stringify(request));
-    console.log(JSON.stringify(context));
     await finish(request, options.request, ...context);
     const response = await framework(request);
     await finish(response, options.response, ...context);
